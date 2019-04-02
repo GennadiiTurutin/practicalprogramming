@@ -22,11 +22,10 @@ const history = syncHistoryWithStore(browserHistory, store)
 ReactDOM.render(
 	<Provider store={store}>
 	  <Router history={history}>
-		 <Route component={Layout} />
+		 <Route component={Layout}>
 		   <Route path='/' component={Products} />
+		 </Route>
 	  </Router>
 	</Provider>,
 	document.getElementById('root')
 )
-
-document.write('Hello React/Redux!')
