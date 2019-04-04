@@ -11,6 +11,7 @@ import {Provider} from 'react-redux'
 import Layout from 'containers/layout'
 import Products from 'containers/products'
 import Product from 'containers/product'
+import Basket from 'containers/basket'
 
 import reducers from 'reducers'
 
@@ -28,6 +29,7 @@ ReactDOM.render(
 		   <Route path='/categories/:id' component={Products} />
 		 </Route>
 		 <Route path='/products/:id' component={Product} />
+		 <Route path='/basket' component={Basket} />
 	  </Router>
 	</Provider>,
 	document.getElementById('root')
