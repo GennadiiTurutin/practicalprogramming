@@ -1,11 +1,6 @@
 from django.db import models
 
-from django.contrib.auth.models import (
-    AbstractBaseUser, BaseUserManager
-)
-
-
-class User(AbstractBaseUser):
+class User(models.Model):
     email       = models.EmailField(max_length=255, unique=True)
     first_name   = models.CharField(max_length=255, blank=True, null=True)
     second_name   = models.CharField(max_length=255, blank=True, null=True)
