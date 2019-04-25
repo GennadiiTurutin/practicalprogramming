@@ -23,7 +23,7 @@ const Categories = ({categories, activeCategoryId}) => {
   		  className={linkClass}
         style={{ textDecoration: 'none' }}
   		  key={index}>
-        <h4 className="text-grey">{category.name}</h4>
+        <h4 className="text-grey">{category.title}</h4>
   		</Link>
 
       </div>

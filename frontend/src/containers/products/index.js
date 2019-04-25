@@ -53,6 +53,7 @@ class Products extends Component {
   render () {
     const {products} = this.props;
     const isEmpty = R.isEmpty(products)
+    console.log('Inside products ', products)
 
     return (
       <div className='col-sm-12 col-lg-12 col-md-12 my-5'>

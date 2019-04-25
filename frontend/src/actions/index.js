@@ -10,6 +10,9 @@ import {
   FETCH_CATEGORIES_START,
   FETCH_CATEGORIES_SUCCESS,
   FETCH_CATEGORIES_FAILURE,
+  FETCH_USERS_START,
+  FETCH_USERS_SUCCESS,
+  FETCH_USERS_FAILURE,
   REMOVE_PRODUCT_FROM_BASKET,
   CLEAN_BASKET
 } from '../actionTypes'
@@ -19,15 +22,17 @@ import {
   fetchCategories as fetchCategoriesApi,
 } from '../api'
 
+import axios from "axios";
+
 export const fetchProducts = () => async dispatch => {
+  dispatch({type: FETCH_PRODUCTS_START})
+
   try {
-    dispatch({type: FETCH_PRODUCTS_START})
-
     const products = await fetchProductsApi()
-
+    console.log('Products: ', products.data)
     dispatch({
       type: FETCH_PRODUCTS_SUCCESS,
-      payload: products
+      payload: products.data
     })
   } catch (err) {
     dispatch({
@@ -38,11 +43,13 @@ export const fetchProducts = () => async dispatch => {
   }
 }
 
+
 export const fetchProductById = id => async dispatch => {
   dispatch({type: FETCH_PRODUCT_BY_ID_START})
 
   try {
     const product = await fetchProductByIdApi(id)
+
     dispatch({
       type: FETCH_PRODUCT_BY_ID_SUCCESS,
       payload: product
@@ -70,17 +77,18 @@ export const searchProduct = text => dispatch => {
   })
 }
 
+
 export const fetchCategories = () => async dispatch => {
-  try {
-    dispatch({type: FETCH_CATEGORIES_START})
-  
-    const categories = await fetchCategoriesApi()
+  dispatch({type: FETCH_CATEGORIES_START})
+
+  try { 
+
+    const categories =  await fetchCategoriesApi()
 
     dispatch({
-      type: FETCH_CATEGORIES_SUCCESS,
-      payload: categories
+        type: FETCH_CATEGORIES_SUCCESS,
+        payload: categories.data
     })
-
   } catch (err) {
     dispatch({
       type: FETCH_CATEGORIES_FAILURE,

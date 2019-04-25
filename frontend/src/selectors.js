@@ -7,9 +7,10 @@ export const getActiveCategoryId = ownProps => R.path(['match', 'params', 'id'],
 export const getProducts = (state, ownProps) => {
 
 	const activeCategoryId = getActiveCategoryId(ownProps)
+	console.log('Active Id: ', activeCategoryId)
 	const applyCategory = item => R.equals(
 		activeCategoryId,
-		R.prop('categoryId', item)
+		R.prop('category', item)
 	)
 
 	const applySearch = item => R.contains(
@@ -19,8 +20,8 @@ export const getProducts = (state, ownProps) => {
 	
 	const products = R.compose(
 		R.filter(applySearch),
-		R.when(R.always(activeCategoryId), R.filter(applyCategory)),
-		R.map(id => getProductById(state, id))
+		//R.when(R.always(activeCategoryId), R.filter(applyCategory)),
+		//R.map(id => getProductById(state, id))
 		)(state.productsPage.ids)
 
 	return products
