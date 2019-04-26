@@ -7,21 +7,23 @@ export const getActiveCategoryId = ownProps => R.path(['match', 'params', 'id'],
 export const getProducts = (state, ownProps) => {
 
 	const activeCategoryId = getActiveCategoryId(ownProps)
-	console.log('Active Id: ', activeCategoryId)
+
+	const activeCategoryUrl = (activeCategoryId === undefined) ? undefined : "http://127.0.0.1:8000/categories/" + activeCategoryId + "/";
+	
 	const applyCategory = item => R.equals(
-		activeCategoryId,
+		activeCategoryUrl,
 		R.prop('category', item)
 	)
 
 	const applySearch = item => R.contains(
 		state.productsPage.search,
-		R.prop('name', item)
+		R.prop('title', item)
 	)
 	
 	const products = R.compose(
 		R.filter(applySearch),
-		//R.when(R.always(activeCategoryId), R.filter(applyCategory)),
-		//R.map(id => getProductById(state, id))
+		R.when(R.always(activeCategoryUrl), R.filter(applyCategory)),
+		R.map(id => getProductById(state, id))
 		)(state.productsPage.ids)
 
 	return products

@@ -29,7 +29,6 @@ export const fetchProducts = () => async dispatch => {
 
   try {
     const products = await fetchProductsApi()
-    console.log('Products: ', products.data)
     dispatch({
       type: FETCH_PRODUCTS_SUCCESS,
       payload: products.data

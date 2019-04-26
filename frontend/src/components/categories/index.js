@@ -7,6 +7,7 @@ import classNames from 'classnames'
 import * as R from 'ramda';
 
 const Categories = ({categories, activeCategoryId}) => {
+  
   const renderCategory = (category, index) => {
   	const getActiveState = R.propEq('id', activeCategoryId)
   	const linkClass = classNames({
