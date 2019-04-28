@@ -42,7 +42,6 @@ export const fetchProducts = () => async dispatch => {
   }
 }
 
-
 export const fetchProductById = id => async dispatch => {
   dispatch({type: FETCH_PRODUCT_BY_ID_START})
 

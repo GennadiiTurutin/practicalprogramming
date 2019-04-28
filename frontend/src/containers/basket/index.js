@@ -45,7 +45,7 @@ const Basket = ({products, totalPrice, removeProductFromBasket, cleanBasket, bas
                        <tbody>
                          <tr>
                            <td>{index + 1}</td>
-                           <td>{product.name}</td>
+                           <td>{product.title}</td>
                            <td>${product.price}</td>
                            <td>{product.count}</td>
                            <td>

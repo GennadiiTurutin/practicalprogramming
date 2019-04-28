@@ -11,9 +11,9 @@ import {
 
 const BasketCart = ({totalBasketCount, totalPrice}) => (
     <div className='container my-4'>
-        <CartDialog count={totalBasketCount} price={totalPrice}> 
-           <Basket />
-        </CartDialog>
+      <CartDialog count={totalBasketCount} price={totalPrice}> 
+         <Basket />
+      </CartDialog>
     </div>
 )
 

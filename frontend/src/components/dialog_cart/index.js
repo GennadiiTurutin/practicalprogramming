@@ -11,6 +11,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
+import Fab from '@material-ui/core/Fab';
+import CloseIcon from '@material-ui/icons/Close';
+import DoneIcon from '@material-ui/icons/Done';
+import Icon from '@material-ui/core/Icon';
+import DeleteIcon from '@material-ui/icons/Delete';
+import NavigationIcon from '@material-ui/icons/Navigation';
+
 const styles = theme => ({
   form: {
     display: 'flex',
@@ -33,6 +40,12 @@ const styles = theme => ({
       theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
     }`,
   },
+  fab: {
+    margin: theme.spacing.unit,
+  },
+  extendedIcon: {
+    marginRight: theme.spacing.unit,
+  },
 });
 
 
@@ -40,7 +53,7 @@ class CartDialog extends React.Component {
   state = {
     open: false,
     fullWidth: true,
-    maxWidth: 'lg'
+    maxWidth: 'md'
   };
 
   handleClickOpen = () => {
@@ -76,11 +89,24 @@ class CartDialog extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <button 
-              onClick={this.handleClose}
-              className='btn btn-outline-secondary'>
-              Close
-            </button>
+            <Fab color="primary" 
+                 onClick={this.handleClose} 
+                 aria-label="Add" 
+                 className={classes.fab}>
+              <DoneIcon />
+            </Fab>
+            <Fab color="secondary" 
+                 onClick={this.handleClose} 
+                 aria-label="Delete" 
+                 className={classes.fab}>
+              <DeleteIcon />
+            </Fab>
+            <Fab color="secondary" 
+                 onClick={this.handleClose} 
+                 aria-label="Close" 
+                 className={classes.fab}>
+              <CloseIcon />
+            </Fab>
           </DialogActions>
         </Dialog>
       </React.Fragment>

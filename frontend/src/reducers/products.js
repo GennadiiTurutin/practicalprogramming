@@ -1,6 +1,5 @@
 import * as R from 'ramda';
 
-
 import {
 	FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCT_BY_ID_SUCCESS

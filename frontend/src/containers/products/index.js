@@ -5,6 +5,17 @@ import * as R from 'ramda';
 import Sidebar from '../../components/sidebar';
 import Header from '../../components/header';
 
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import green from '@material-ui/core/colors/green';
+import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import CheckIcon from '@material-ui/icons/Check';
+import SaveIcon from '@material-ui/icons/Save';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
+
 import {
   fetchProducts,
   addProductToBasket,
@@ -13,8 +24,66 @@ import {
 
 import {getProducts} from '../../selectors'
 
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  wrapper: {
+    margin: theme.spacing.unit,
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+  fabProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: -6,
+    left: -6,
+    zIndex: 1,
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
+});
 
 class Products extends Component {
+  state = {
+     loading: false,
+     success: false,
+  };
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  handleButtonClick = () => {
+    if (!this.state.loading) {
+      this.setState(
+        {
+          success: false,
+          loading: true,
+        },
+        () => {
+          this.timer = setTimeout(() => {
+            this.setState({
+              loading: false,
+              success: true,
+            });
+          }, 1000);
+        },
+      );
+    }
+  };
 
   componentDidMount () {
     this.props.fetchProducts()
@@ -24,6 +93,9 @@ class Products extends Component {
   renderProduct(product, index) {
     const {addProductToBasket} = this.props
     const shortDescription = `${R.take(100, product.description)}...`
+    const { loading, success } = this.state;
+    const { classes } = this.props;
+    const buttonClassname = classNames({[classes.buttonSuccess]: success,});
     
     return (
         <div className="col-lg-12 my-4" key={index}>
@@ -40,11 +112,14 @@ class Products extends Component {
               className='btn btn-outline-success mr-2 my-4'>
               Buy Now!
             </button>
-            <Link 
-              to={`/products/${product.id}`}
-              className='btn btn-outline-secondary mx-2 my-4'>
-              More Info
-            </Link>
+            <div className={classes.root}>
+              <div className={classes.wrapper}>
+                <Fab color="primary" className={buttonClassname} onClick={() => { this.handleButtonClick(); addProductToBasket(product.id)}}>
+                  {success ? <CheckIcon /> : <ShoppingCart />}
+                </Fab>
+                {loading && <CircularProgress size={68} className={classes.fabProgress} />}
+              </div>
+            </div>
           </div>
       </div>
     )
@@ -88,4 +163,11 @@ const mapDispatchToProps = {
   fetchCategories
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Products)
+Products.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default R.compose(
+   withStyles(styles),
+   connect(mapStateToProps, mapDispatchToProps)
+)(Products)

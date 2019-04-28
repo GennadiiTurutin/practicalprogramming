@@ -1,46 +1,52 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Nav, Navbar, Button } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import { getTotalBasketCount } from '../../selectors';
 import { Link } from 'react-router-dom';
 import CartDialog from '../../components/dialog_cart';
+import LoginDialog from '../../components/dialog_login';
+import RegisterDialog from '../../components/dialog_register';
 import Basket from '../../containers/basket'
 
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state/index';
+
+
 const Navigation = ({totalBasketCount}) => {
-  const isAuthenticated = false;
+
+  const isAuthenticated = true;
 
   const authLinks = (
     <Nav className="ml-auto">
-      <Button variant="default" className="text-grey">
-        Cabinet
+      <Button aria-label="Classroom" color="primary" className="text-grey">
+        Classroom
       </Button>
-      <Button variant="default" className="text-grey">
-        Logout
-      </Button>
-      <Nav.Link variant="default" className="text-grey">
-      Gennadii
-      </Nav.Link>
-      <Button variant="default">
-        <CartDialog count={totalBasketCount}> 
-           <Basket />
-        </CartDialog>
-      </Button>
+      <PopupState variant="popover" popupId="demo-popup-menu">
+        {popupState => (
+          <React.Fragment>
+            <Button aria-label="Cabinet" className="text-grey" color="primary" 
+                     {...bindTrigger(popupState)}>
+              Gennadii
+            </Button>
+            <Menu {...bindMenu(popupState)}>
+              <MenuItem onClick={popupState.close}>Profile</MenuItem>
+              <MenuItem onClick={popupState.close}>Logout</MenuItem>
+            </Menu>
+          </React.Fragment>
+        )}
+      </PopupState>
     </Nav>
   );
 
   const guestLinks = (
     <Nav className="ml-auto">
-      <Button variant="default" className="text-grey">
-        Login
-      </Button>
-      <Button variant="default" className="text-grey">
-        Register
-      </Button>
-      <Button variant="default">
-        <CartDialog count={totalBasketCount}> 
-           <Basket />
-        </CartDialog>
-      </Button>
+      <LoginDialog /> 
+      <RegisterDialog /> 
+      <CartDialog count={totalBasketCount}> 
+        <Basket />
+      </CartDialog>
     </Nav>
   );
 
