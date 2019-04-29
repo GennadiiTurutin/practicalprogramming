@@ -5,33 +5,37 @@ import {getCategories, getActiveCategoryId} from '../../selectors'
 import {compose} from 'redux'
 import classNames from 'classnames'
 import * as R from 'ramda';
+import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
 
 const Categories = ({categories, activeCategoryId}) => {
   
   const renderCategory = (category, index) => {
   	const getActiveState = R.propEq('id', activeCategoryId)
+    const SelectCategory = props => <Link to={`/categories/${category.id}`} {...props} />
   	const linkClass = classNames({
-  		'list-group-item': true,
       'bg-secondary': true,
       'rounded-0': true,
   		'active': getActiveState(category)
     })
 
   	return (
-      <div key={index}>
-  		<Link 
-  		  to={`/categories/${category.id}`}
-  		  className={linkClass}
-        style={{ textDecoration: 'none' }}
-  		  key={index}>
-        <h4 className="text-grey">{category.title}</h4>
-  		</Link>
-
-      </div>
+      <Button aria-label="Category" color="primary" component={SelectCategory} key={index}>
+        <div className="container text-left text-grey">
+        <h5>
+          <Checkbox
+            checked={false}
+            value="checkedA"
+          />
+          {category.title}
+        </h5>
+        </div>
+      </Button>
 	  )
   }
 
   const renderAllCategory = () => {
+    const AllCategories = props => <Link to="/" {...props} />
   	const linkClass = classNames({
   		'list-group-item': true,
       'bg-secondary': true,
@@ -40,9 +44,17 @@ const Categories = ({categories, activeCategoryId}) => {
   	})
 
   	return (
-  		<Link to='/' className={linkClass} style={{ textDecoration: 'none' }}>
-      <h4 className="text-grey">All categories</h4>
-      </Link>
+      <Button aria-label="Category" color="primary" component={AllCategories}>
+        <div className="container text-left text-grey">
+        <h5>
+          <Checkbox
+            checked={false}
+            value="checkedA"
+          />
+          All categories
+        </h5>
+        </div>
+      </Button>
   	)
   }
 

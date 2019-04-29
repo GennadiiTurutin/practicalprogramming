@@ -16,7 +16,7 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state/index
 
 const Navigation = ({totalBasketCount}) => {
 
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   const authLinks = (
     <Nav className="ml-auto">

@@ -15,11 +15,24 @@ import Fab from '@material-ui/core/Fab';
 import CheckIcon from '@material-ui/icons/Check';
 import SaveIcon from '@material-ui/icons/Save';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import CloseIcon from '@material-ui/icons/Close';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import Favorite from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+
+
 
 import {
   fetchProducts,
   addProductToBasket,
-  fetchCategories
+  fetchCategories,
+  removeProductFromBasket
 } from '../../actions'
 
 import {getProducts} from '../../selectors'
@@ -54,13 +67,25 @@ const styles = theme => ({
     marginTop: -12,
     marginLeft: -12,
   },
+  root: {
+    color: green[600],
+    '&$checked': {
+      color: green[500],
+      },
+    },
+    checked: {},
 });
 
 class Products extends Component {
   state = {
      loading: false,
      success: false,
+     checked: true,
   };
+
+  handleChange = name => event => {
+      this.setState({ [name]: event.target.checked });
+    };
 
   componentWillUnmount() {
     clearTimeout(this.timer);
@@ -107,19 +132,27 @@ class Products extends Component {
             </h2>
             <p>{shortDescription}</p>
             <h4>Price: ${product.price}</h4>
-            <button 
-              onClick={() => addProductToBasket(product.id)}
-              className='btn btn-outline-success mr-2 my-4'>
-              Buy Now!
-            </button>
-            <div className={classes.root}>
-              <div className={classes.wrapper}>
-                <Fab color="primary" className={buttonClassname} onClick={() => { this.handleButtonClick(); addProductToBasket(product.id)}}>
-                  {success ? <CheckIcon /> : <ShoppingCart />}
-                </Fab>
-                {loading && <CircularProgress size={68} className={classes.fabProgress} />}
-              </div>
-            </div>
+
+                <div className="container text-right">
+                  <FormControlLabel 
+                    control={
+                      <Checkbox icon={<ShoppingCart  />} checkedIcon={<CheckIcon />} value="checkedH" 
+                      onClick={() => { this.handleButtonClick(); addProductToBasket(product.id)}}/>
+                    }
+                  />
+                  <FormControlLabel 
+                    control={
+                      <Checkbox icon={<DeleteIcon  />} checkedIcon={<DeleteIcon disabled />} value="checkedH" 
+                      onClick={() => { this.handleButtonClick(); removeProductFromBasket(product.id)}}/>
+                    }
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} value="checkedH" />
+                    }
+                  />
+                </div>
+
           </div>
       </div>
     )
@@ -160,7 +193,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = {
   fetchProducts, 
   addProductToBasket,
-  fetchCategories
+  fetchCategories,
+  removeProductFromBasket
 }
 
 Products.propTypes = {
