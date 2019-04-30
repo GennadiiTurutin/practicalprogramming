@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
 import {getCategories, getActiveCategoryId} from '../../selectors'
 import {compose} from 'redux'
-import classNames from 'classnames'
 import * as R from 'ramda';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
@@ -13,11 +12,6 @@ const Categories = ({categories, activeCategoryId}) => {
   const renderCategory = (category, index) => {
   	const getActiveState = R.propEq('id', activeCategoryId)
     const SelectCategory = props => <Link to={`/categories/${category.id}`} {...props} />
-  	const linkClass = classNames({
-      'bg-secondary': true,
-      'rounded-0': true,
-  		'active': getActiveState(category)
-    })
 
   	return (
       <Button aria-label="Category" color="primary" component={SelectCategory} key={index}>
@@ -36,12 +30,6 @@ const Categories = ({categories, activeCategoryId}) => {
 
   const renderAllCategory = () => {
     const AllCategories = props => <Link to="/" {...props} />
-  	const linkClass = classNames({
-  		'list-group-item': true,
-      'bg-secondary': true,
-      'rounded-0': true,
-  		'active': R.isNil(activeCategoryId)
-  	})
 
   	return (
       <Button aria-label="Category" color="primary" component={AllCategories}>

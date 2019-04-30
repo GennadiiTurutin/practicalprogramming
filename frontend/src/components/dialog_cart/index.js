@@ -14,9 +14,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
-import Icon from '@material-ui/core/Icon';
 import DeleteIcon from '@material-ui/icons/Delete';
-import NavigationIcon from '@material-ui/icons/Navigation';
 
 const styles = theme => ({
   form: {
@@ -66,7 +64,6 @@ class CartDialog extends React.Component {
 
   render() {
     const { count } = this.props;
-    const { price } = this.props;
     const { classes } = this.props;
 
     return (

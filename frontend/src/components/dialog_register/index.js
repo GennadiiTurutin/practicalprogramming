@@ -6,33 +6,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
-import { Link, Redirect } from "react-router-dom";
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { Nav, Navbar } from 'react-bootstrap';
+import { Redirect } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 
-
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import classNames from 'classnames';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import MenuItem from '@material-ui/core/MenuItem';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
-import Icon from '@material-ui/core/Icon';
-import DeleteIcon from '@material-ui/icons/Delete';
-import NavigationIcon from '@material-ui/icons/Navigation';
 
 const styles = theme => ({
   form: {
@@ -131,8 +113,6 @@ class RegisterDialog extends React.Component {
 
 
   render() {
-    const { count } = this.props;
-    const { price } = this.props;
     const { classes } = this.props;
 
     if (this.props.isAuthenticated) {
@@ -153,7 +133,10 @@ class RegisterDialog extends React.Component {
           <DialogTitle id="dialog">Register</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              <form className={classes.container} noValidate autoComplete="off">
+              <form className={classes.container} 
+              noValidate 
+              autoComplete="off"
+              id='my-form'>
                 <TextField
                   id="firstname"
                   label="First Name"
@@ -256,7 +239,8 @@ class RegisterDialog extends React.Component {
           </DialogContent>
           <DialogActions>
             <Fab color="primary" 
-                 onClick={this.handleClose} 
+                 type="submit"
+                 form="my-form"
                  aria-label="Add" 
                  className={classes.fab}>
               <DoneIcon />

@@ -4,25 +4,16 @@ import {Link} from 'react-router-dom'
 import * as R from 'ramda';
 import Sidebar from '../../components/sidebar';
 import Header from '../../components/header';
-
+import {compose} from 'redux'
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import green from '@material-ui/core/colors/green';
-import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
-import CheckIcon from '@material-ui/icons/Check';
-import SaveIcon from '@material-ui/icons/Save';
-import ShoppingCart from '@material-ui/icons/ShoppingCart';
-import CloseIcon from '@material-ui/icons/Close';
-import DeleteIcon from '@material-ui/icons/Delete';
 
-import FormGroup from '@material-ui/core/FormGroup';
+import { withStyles } from '@material-ui/core/styles';
+import green from '@material-ui/core/colors/green';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import CheckIcon from '@material-ui/icons/Check';
+import DeleteIcon from '@material-ui/icons/Delete';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
@@ -41,6 +32,10 @@ const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
+    color: green[600],
+    '&$checked': {
+      color: green[500],
+      },
   },
   wrapper: {
     margin: theme.spacing.unit,
@@ -67,18 +62,11 @@ const styles = theme => ({
     marginTop: -12,
     marginLeft: -12,
   },
-  root: {
-    color: green[600],
-    '&$checked': {
-      color: green[500],
-      },
-    },
-    checked: {},
+
 });
 
 class Products extends Component {
   state = {
-     loading: false,
      success: false,
      checked: true,
   };
@@ -118,9 +106,6 @@ class Products extends Component {
   renderProduct(product, index) {
     const {addProductToBasket} = this.props
     const shortDescription = `${R.take(100, product.description)}...`
-    const { loading, success } = this.state;
-    const { classes } = this.props;
-    const buttonClassname = classNames({[classes.buttonSuccess]: success,});
     
     return (
         <div className="col-lg-12 my-4" key={index}>
@@ -133,26 +118,25 @@ class Products extends Component {
             <p>{shortDescription}</p>
             <h4>Price: ${product.price}</h4>
 
-                <div className="container text-right">
-                  <FormControlLabel 
-                    control={
-                      <Checkbox icon={<ShoppingCart  />} checkedIcon={<CheckIcon />} value="checkedH" 
-                      onClick={() => { this.handleButtonClick(); addProductToBasket(product.id)}}/>
-                    }
-                  />
-                  <FormControlLabel 
-                    control={
-                      <Checkbox icon={<DeleteIcon  />} checkedIcon={<DeleteIcon disabled />} value="checkedH" 
-                      onClick={() => { this.handleButtonClick(); removeProductFromBasket(product.id)}}/>
-                    }
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} value="checkedH" />
-                    }
-                  />
-                </div>
-
+            <div className="container text-right">
+              <FormControlLabel 
+                control={
+                  <Checkbox icon={<ShoppingCart  />} checkedIcon={<CheckIcon />} value="checkedH" 
+                  onClick={() => { this.handleButtonClick(); addProductToBasket(product.id)}}/>
+                }
+              />
+              <FormControlLabel 
+                control={
+                  <Checkbox icon={<DeleteIcon  />} checkedIcon={<DeleteIcon disabled />} value="checkedH" 
+                  onClick={() => { this.handleButtonClick(); removeProductFromBasket(product.id)}}/>
+                }
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} value="checkedH" />
+                }
+              />
+            </div>
           </div>
       </div>
     )
@@ -201,7 +185,4 @@ Products.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default R.compose(
-   withStyles(styles),
-   connect(mapStateToProps, mapDispatchToProps)
-)(Products)
+export default compose(withStyles(styles),connect(mapStateToProps, mapDispatchToProps))(Products)
