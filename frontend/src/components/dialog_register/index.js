@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { register } from "../../actions";
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -10,7 +13,6 @@ import { Redirect } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
 
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
@@ -64,29 +66,19 @@ const styles = theme => ({
   },
 });
 
-const titles = [
-  {
-    value: 'Mister',
-    label: 'Mr.',
-  },
-  {
-    value: 'Miss',
-    label: 'Ms.',
-  },
-];
-
 class RegisterDialog extends React.Component {
   state = {
     open: false,
     fullWidth: true,
     maxWidth: 'sm',
     username: "",
+    email: "",
     password: "",
     showPassword: false,
   };
 
   static propTypes = {
-    login: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool
   };
 
@@ -94,23 +86,34 @@ class RegisterDialog extends React.Component {
     this.setState({ open: true });
   };
 
-  handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
-  };
+  handleUsernameChange = e => {
+     this.setState({username: e.target.value});
+  }
+
+  handleEmailChange = e => {
+     this.setState({email: e.target.value});
+  }
+
+  handlePasswordChange = e => {
+     this.setState({password: e.target.value});
+  }
+
+  handleConfirmationChange = e => {
+     this.setState({confirmation: e.target.value});
+  }
 
   handleClose = () => {
     this.setState({ open: false });
   };
 
   onSubmit = e => {
-    e.preventDefault();
-    this.props.login(this.state.username, this.state.password);
+    console.log(this.state.username, this.state.email, this.state.password)
+    this.props.register(this.state.username, this.state.email, this.state.password);
   };
 
-   handleClickShowPassword = () => {
+  handleClickShowPassword = () => {
     this.setState(state => ({ showPassword: !state.showPassword }));
   };
-
 
   render() {
     const { classes } = this.props;
@@ -134,114 +137,74 @@ class RegisterDialog extends React.Component {
           <DialogContent>
             <DialogContentText>
               <form className={classes.container} 
-              noValidate 
-              autoComplete="off"
-              id='my-form'>
-                <TextField
-                  id="firstname"
-                  label="First Name"
-                  style={{ margin: 8 }}
-                  margin="normal"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                <TextField
-                  id="lastname"
-                  label="Last Name"
-                  style={{ margin: 8 }}
-                  margin="normal"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                <TextField
-                  id="username"
-                  label="Username"
-                  style={{ margin: 8 }}
-                  placeholder="Preferred username"
-                  margin="normal"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                <TextField
-                  id="outlined-select-title"
-                  select
-                  label="Title"
-                  style={{ margin: 8 }}
-                  className={classes.textField}
-                  value={this.state.title}
-                  onChange={this.handleChange('title')}
-                  SelectProps={{
-                    MenuProps: {
-                      className: classes.menu,
-                    },
-                  }}
-                  helperText="Please select your title"
-                  margin="normal"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                >
-                  {titles.map(option => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                <TextField
-                  id="email"
-                  label="Email"
-                  style={{ margin: 8 }}
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                <TextField
-                  id="password"
-                  label="Password"
-                  style={{ margin: 8 }}
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  type="password"
-                  autoComplete="current-password"
-                  helperText="Your password might include anything"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                <TextField
-                  id="confirmation"
-                  label="Confirmation"
-                  style={{ margin: 8 }}
-                  placeholder="Confirm your password"
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  type="password"
-                  autoComplete="current-password"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-
+                    noValidate 
+                    autoComplete="off">
+                    <TextField
+                      id="username"
+                      label="Username"
+                      style={{ margin: 8 }}
+                      placeholder="Preferred username"
+                      margin="normal"
+                      value={this.state.username}
+                      onChange={this.handleUsernameChange}
+                      variant="outlined"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                    <TextField
+                      id="email"
+                      label="Email"
+                      style={{ margin: 8 }}
+                      fullWidth
+                      margin="normal"
+                      value={this.state.email}
+                      onChange={this.handleEmailChange}
+                      variant="outlined"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                    <TextField
+                      id="password"
+                      label="Password"
+                      style={{ margin: 8 }}
+                      fullWidth
+                      margin="normal"
+                      variant="outlined"
+                      type="password"
+                      value={this.state.password}
+                      onChange={this.handlePasswordChange}
+                      autoComplete="current-password"
+                      helperText="Your password might include anything"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                    <TextField
+                      id="confirmation"
+                      label="Confirmation"
+                      style={{ margin: 8 }}
+                      placeholder="Confirm your password"
+                      fullWidth
+                      margin="normal"
+                      variant="outlined"
+                      value={this.state.confirmation}
+                      onChange={this.handleConfirmationChange}
+                      type="password"
+                      autoComplete="current-password"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
               </form>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Fab color="primary" 
-                 type="submit"
-                 form="my-form"
+                 type="button"
                  aria-label="Add" 
+                 onClick={this.onSubmit} 
                  className={classes.fab}>
               <DoneIcon />
             </Fab>
@@ -262,4 +225,9 @@ RegisterDialog.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(RegisterDialog);
+const mapDispatchToProps = {
+  register
+}
+
+export default compose(
+  withStyles(styles), connect(null, mapDispatchToProps))(RegisterDialog)

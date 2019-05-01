@@ -9,13 +9,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import { Redirect } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'
-import {compose} from 'redux'
+import { compose } from 'redux'
 import TextField from '@material-ui/core/TextField';
 
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
-import { login } from "../../api";
+import { login } from "../../actions";
 
 
 const styles = theme => ({
@@ -85,29 +85,30 @@ class LoginDialog extends React.Component {
   handleClickOpen = () => {
     this.setState({ open: true });
   };
+  
+  handleEmailChange = e => {
+     this.setState({email: e.target.value});
+  }
 
-  handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
-  };
+  handlePasswordChange = e => {
+     this.setState({password: e.target.value});
+  }
 
   handleClose = () => {
     this.setState({ open: false });
   };
 
   onSubmit = e => {
-    e.preventDefault();
-    this.props.login(this.state.email, this.state.password);
+    this.props.login(this.state.email, this.state.password)
   };
 
-   handleClickShowPassword = () => {
+  handleClickShowPassword = () => {
     this.setState(state => ({ showPassword: !state.showPassword }));
   };
 
 
   render() {
     const { classes } = this.props;
-    const { email, password } = this.state;
-
     if (this.props.isAuthenticated) {
       return <Redirect to='/' />;
     }
@@ -128,46 +129,43 @@ class LoginDialog extends React.Component {
             <DialogContentText>
               <form className={classes.container} 
                     noValidate 
-                    autoComplete="off" 
-                    id='my-form'
-                    onSubmit={this.onSubmit}>
-
-                <TextField
-                  id="email"
-                  label="Email"
-                  style={{ margin: 8 }}
-                  fullWidth
-                  onChange={this.onChange}
-                  margin="normal"
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                <TextField
-                  id="password"
-                  label="Password"
-                  style={{ margin: 8 }}
-                  fullWidth
-                  onChange={this.onChange}
-                  margin="normal"
-                  variant="outlined"
-                  type="password"
-                  autoComplete="current-password"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                <div className="form-group">
-                </div>
+                    autoComplete="off">
+                  <TextField
+                    id="email"
+                    label="Email"
+                    style={{ margin: 8 }}
+                    fullWidth
+                    value={this.state.email}
+                    onChange={this.handleEmailChange}
+                    margin="normal"
+                    variant="outlined"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                  <TextField
+                    id="password"
+                    label="Password"
+                    style={{ margin: 8 }}
+                    fullWidth
+                    value={this.state.password}
+                    onChange={this.handlePasswordChange}
+                    margin="normal"
+                    variant="outlined"
+                    type="password"
+                    autoComplete="current-password"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
               </form>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Fab color="primary" 
-                 type="submit"
-                 form="my-form"
+                 type="button"
                  aria-label="Add" 
+                 onClick={this.onSubmit}
                  className={classes.fab}>
               <DoneIcon />
             </Fab>
