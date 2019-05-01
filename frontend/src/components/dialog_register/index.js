@@ -107,8 +107,8 @@ class RegisterDialog extends React.Component {
   };
 
   onSubmit = e => {
-    console.log(this.state.username, this.state.email, this.state.password)
     this.props.register(this.state.username, this.state.email, this.state.password);
+    this.handleClose()
   };
 
   handleClickShowPassword = () => {
@@ -229,5 +229,4 @@ const mapDispatchToProps = {
   register
 }
 
-export default compose(
-  withStyles(styles), connect(null, mapDispatchToProps))(RegisterDialog)
+export default compose(withStyles(styles), connect(null, mapDispatchToProps))(RegisterDialog)

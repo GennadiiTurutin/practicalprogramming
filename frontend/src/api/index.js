@@ -40,20 +40,22 @@ export const loadUser = async id => {
 };
 
 
-export const login = async ({ email, password }) => {
+export const login = async ( username, password ) => {
+  console.log("Inside api func: ", username, password)
   return new Promise(resolve => {
     const config = {
       headers: {
         "Content-Type": "application/json"
       }
     };
-    const body = JSON.stringify({ email, password });
-    const response = axios.post("http://127.0.0.1:8000/auth/login/", body, config)
+    const body = JSON.stringify({ username, password });
+    const response = axios.post("http://127.0.0.1:8000/auth/login", body, config)
+    console.log(response)
     resolve(response)
   })
 };
 
-export const register = async ({ username, email, password }) => {
+export const register = async ( username, email, password ) => {
   return new Promise(resolve => {
     const config = {
       headers: {

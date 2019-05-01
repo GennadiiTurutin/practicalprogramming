@@ -86,8 +86,8 @@ class LoginDialog extends React.Component {
     this.setState({ open: true });
   };
   
-  handleEmailChange = e => {
-     this.setState({email: e.target.value});
+  handleUsernameChange = e => {
+     this.setState({username: e.target.value});
   }
 
   handlePasswordChange = e => {
@@ -99,16 +99,17 @@ class LoginDialog extends React.Component {
   };
 
   onSubmit = e => {
-    this.props.login(this.state.email, this.state.password)
+    this.props.login(this.state.username, this.state.password)
+    this.handleClose()
   };
 
   handleClickShowPassword = () => {
     this.setState(state => ({ showPassword: !state.showPassword }));
   };
 
-
   render() {
     const { classes } = this.props;
+
     if (this.props.isAuthenticated) {
       return <Redirect to='/' />;
     }
@@ -131,12 +132,12 @@ class LoginDialog extends React.Component {
                     noValidate 
                     autoComplete="off">
                   <TextField
-                    id="email"
-                    label="Email"
+                    id="username"
+                    label="Username"
                     style={{ margin: 8 }}
                     fullWidth
-                    value={this.state.email}
-                    onChange={this.handleEmailChange}
+                    value={this.state.username}
+                    onChange={this.handleUsernameChange}
                     margin="normal"
                     variant="outlined"
                     InputLabelProps={{
@@ -190,5 +191,4 @@ const mapDispatchToProps = {
   login
 }
 
-export default compose(
-  withStyles(styles), connect(null, mapDispatchToProps))(LoginDialog)
+export default compose(withStyles(styles), connect(null, mapDispatchToProps))(LoginDialog)

@@ -141,10 +141,11 @@ export const basketCheckout = products => () => {
   alert(JSON.stringify(products))
 }
 
-export const login = ( email, password ) => async dispatch => {
+export const login = ( username, password ) => async dispatch => {
+  console.log('Inside dispatcher ', username, password)
   dispatch({type: LOGIN_USER_START})
   try {
-    const user = await loginUserApi(email, password)
+    const user = await loginUserApi(username, password)
     dispatch({
       type: LOGIN_USER_SUCCESS,
       payload: user

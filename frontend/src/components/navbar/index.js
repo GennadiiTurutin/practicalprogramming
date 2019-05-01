@@ -42,11 +42,13 @@ const Navigation = ({totalBasketCount}) => {
 
   const guestLinks = (
     <Nav className="ml-auto">
+      <div>
       <LoginDialog /> 
       <RegisterDialog /> 
       <CartDialog count={totalBasketCount}> 
         <Basket />
       </CartDialog>
+      </div>
     </Nav>
   );
 
