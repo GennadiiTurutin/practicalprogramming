@@ -3,6 +3,13 @@ import {connect} from 'react-redux'
 import * as R from 'ramda';
 import { FaWindowClose } from 'react-icons/fa';
 import { Table } from 'react-bootstrap';
+import CartDialog from '../../components/dialog_cart';
+
+import {
+  getTotalBasketCount,
+  getTotalBasketPrice,
+  getBasketProductsWithCount
+} from '../../selectors'
 
 import {
   removeProductFromBasket,
@@ -10,13 +17,23 @@ import {
   basketCheckout
 } from '../../actions'
 
-import {getBasketProductsWithCount, getTotalBasketPrice} from '../../selectors'
 
-const Basket = ({products, totalPrice, removeProductFromBasket, cleanBasket, basketCheckout}) => {
+const Basket = (
+  { products, 
+    totalPrice, 
+    removeProductFromBasket, 
+    cleanBasket, 
+    basketCheckout, 
+    totalBasketCount,
+  }
+  ) => {
 
   const isBasketEmpty = R.isEmpty(products)
 
   return (
+    <div className='container my-4'>
+
+    <CartDialog count={totalBasketCount} price={totalPrice}> 
      <div className='view-container'>
        <div className='container my-4'>
          <div className='row'>
@@ -42,7 +59,7 @@ const Basket = ({products, totalPrice, removeProductFromBasket, cleanBasket, bas
                          </tr>
                        </thead>
                        {products.map((product, index) => (
-                       <tbody>
+                       <tbody key={index}>
                          <tr>
                            <td>{index + 1}</td>
                            <td>{product.title}</td>
@@ -79,13 +96,16 @@ const Basket = ({products, totalPrice, removeProductFromBasket, cleanBasket, bas
          </div>
        </div>
      </div>
+     </CartDialog>
+     </div>
   )
 }
 
 const mapStateToProps = state => {
   return {
   products: getBasketProductsWithCount(state),
-  totalPrice: getTotalBasketPrice(state)
+  totalPrice: getTotalBasketPrice(state),
+  totalBasketCount: getTotalBasketCount(state)
   }
 }
 

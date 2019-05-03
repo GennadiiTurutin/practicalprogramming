@@ -3,14 +3,12 @@ import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
 import {getCategories, getActiveCategoryId} from '../../selectors'
 import {compose} from 'redux'
-import * as R from 'ramda';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 
 const Categories = ({categories, activeCategoryId}) => {
   
   const renderCategory = (category, index) => {
-  	const getActiveState = R.propEq('id', activeCategoryId)
     const SelectCategory = props => <Link to={`/categories/${category.id}`} {...props} />
 
   	return (

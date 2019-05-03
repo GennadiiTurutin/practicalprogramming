@@ -4,11 +4,6 @@ import {Link} from 'react-router-dom'
 import * as R from 'ramda';
 import Sidebar from '../../components/sidebar';
 import Header from '../../components/header';
-import {compose} from 'redux'
-import PropTypes from 'prop-types';
-
-import { withStyles } from '@material-ui/core/styles';
-import green from '@material-ui/core/colors/green';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import CheckIcon from '@material-ui/icons/Check';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -16,8 +11,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
-
-
 
 import {
   fetchProducts,
@@ -27,43 +20,6 @@ import {
 } from '../../actions'
 
 import {getProducts} from '../../selectors'
-
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    color: green[600],
-    '&$checked': {
-      color: green[500],
-      },
-  },
-  wrapper: {
-    margin: theme.spacing.unit,
-    position: 'relative',
-  },
-  buttonSuccess: {
-    backgroundColor: green[500],
-    '&:hover': {
-      backgroundColor: green[700],
-    },
-  },
-  fabProgress: {
-    color: green[500],
-    position: 'absolute',
-    top: -6,
-    left: -6,
-    zIndex: 1,
-  },
-  buttonProgress: {
-    color: green[500],
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
-  },
-
-});
 
 class Products extends Component {
   state = {
@@ -111,7 +67,7 @@ class Products extends Component {
         <div className="col-lg-12 my-4" key={index}>
           <div className="text-left text-grey">
             <h2 className="text-grey">
-              <Link to={`/products/${product.id}`} style={{ textDecoration: 'none', color: "#B1B7BD" }}>
+              <Link to={`/products/${product.slug}`} style={{ textDecoration: 'none', color: "#B1B7BD" }}>
                 {product.title}
               </Link>
             </h2>
@@ -181,8 +137,5 @@ const mapDispatchToProps = {
   removeProductFromBasket
 }
 
-Products.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
-export default compose(withStyles(styles),connect(mapStateToProps, mapDispatchToProps))(Products)
+export default connect(mapStateToProps, mapDispatchToProps)(Products)

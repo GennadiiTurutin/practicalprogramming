@@ -16,6 +16,13 @@ export const fetchProductById = async id => {
 	})
 }
 
+export const fetchProductBySlug = async slug => {
+  return new Promise((resolve, reject) => {
+    const product = R.find(R.propEq('slug', slug), products)
+    resolve(product)  
+  })
+}
+
 export const fetchCategories = async () => {
 	return new Promise(resolve => {
 		const response = axios.get("http://127.0.0.1:8000/categories/")

@@ -7,6 +7,10 @@ import {
   FETCH_PRODUCT_BY_ID_SUCCESS,
   FETCH_PRODUCT_BY_ID_FAILURE,
 
+  FETCH_PRODUCT_BY_SLUG_START,
+  FETCH_PRODUCT_BY_SLUG_SUCCESS,
+  FETCH_PRODUCT_BY_SLUG_FAILURE,
+
   FETCH_CATEGORIES_START,
   FETCH_CATEGORIES_SUCCESS,
   FETCH_CATEGORIES_FAILURE,
@@ -35,6 +39,7 @@ import {
 import {
   fetchProducts as fetchProductsApi,
   fetchProductById as fetchProductByIdApi,
+  fetchProductBySlug as fetchProductBySlugApi,
   fetchUserById as fetchUserByIdApi,
   fetchCategories as fetchCategoriesApi,
   login as loginUserApi,
@@ -87,6 +92,23 @@ export const fetchProductById = id => async dispatch => {
   } catch (err) {
     dispatch({
       type: FETCH_PRODUCT_BY_ID_FAILURE,
+      payload: err,
+      error: true
+    })
+  }
+}
+
+export const fetchProductBySlug = slug => async dispatch => {
+  dispatch({type: FETCH_PRODUCT_BY_SLUG_START})
+  try {
+    const product = await fetchProductBySlugApi(slug)
+    dispatch({
+      type: FETCH_PRODUCT_BY_SLUG_SUCCESS,
+      payload: product
+    })
+  } catch (err) {
+    dispatch({
+      type: FETCH_PRODUCT_BY_SLUG_FAILURE,
       payload: err,
       error: true
     })

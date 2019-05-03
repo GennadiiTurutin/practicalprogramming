@@ -2,6 +2,8 @@ import * as R from 'ramda';
 
 export const getProductById = (state, id) => R.prop(id, state.products)
 
+export const getProductBySlug = (state, slug) => R.prop(slug, state.products)
+
 export const getActiveCategoryId = ownProps => R.path(['match', 'params', 'id'], ownProps)
 
 export const getProducts = (state, ownProps) => {

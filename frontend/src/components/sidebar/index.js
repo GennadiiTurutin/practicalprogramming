@@ -1,8 +1,8 @@
 import React from 'react'
 import BasketInfo from '../../components/basketInfo'
-import BasketCart from '../../components/basketCart'
 import Search from '../../components/search'
 import Categories from '../../components/categories'
+import Basket from '../../containers/basket'
 
 const Sidebar = () => {
   return (
@@ -13,7 +13,7 @@ const Sidebar = () => {
       <BasketInfo />
       </div>
       <div className="container text-center">
-      <BasketCart />
+      <Basket />
       </div>
     </div>
   )

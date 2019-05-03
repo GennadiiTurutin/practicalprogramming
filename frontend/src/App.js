@@ -30,7 +30,7 @@ class App extends Component {
               <Switch>
                 <Route path='/' exact component={Products} />
                 <Route path='/categories/:id' component={Products} />
-                <Route path='/products/:id' component={Product} />
+                <Route path='/products/:slug' component={Product} />
   		          <Route path='/basket' component={Basket} />
                 <Route path='/profile' component={Profile} />
                 <Route path='/cabinet' component={Cabinet} />

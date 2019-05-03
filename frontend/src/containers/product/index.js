@@ -2,14 +2,14 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
-import {fetchProductById, addProductToBasket} from '../../actions'
-import {getProductById} from '../../selectors';
+import {fetchProductBySlug, addProductToBasket} from '../../actions'
+import {getProductBySlug} from '../../selectors';
 
 import Sidebar from '../../components/sidebar';
 
 class Product extends Component {
   componentDidMount () {
-    this.props.fetchProductById(this.props.match.params.id)
+    this.props.fetchProductBySlug(this.props.match.params.slug)
   }
 
   
@@ -18,7 +18,7 @@ class Product extends Component {
     return (
       <div className="container my-4 text-grey"> 
         <div className='form-group'>
-          <h1>{product.name}</h1>
+          <h1>{product.title}</h1>
           <p>{product.description}</p>
           <h2>${product.price}</h2>
         </div>
@@ -57,12 +57,12 @@ class Product extends Component {
 
 const mapStateToProps = state => {
   return {
-    product: getProductById(state, state.productPage.id)
+    product: getProductBySlug(state, state.productPage.slug)
   }
 }
 
 const mapDispatchToProps = {
-  fetchProductById,
+  fetchProductBySlug,
   addProductToBasket
 }
 
