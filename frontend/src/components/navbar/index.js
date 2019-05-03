@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import { Nav, Navbar } from 'react-bootstrap';
 import { getTotalBasketCount } from '../../selectors';
 import { Link } from 'react-router-dom';
-import CartDialog from '../../components/dialog_cart';
 import LoginDialog from '../../components/dialog_login';
 import RegisterDialog from '../../components/dialog_register';
 import Basket from '../../containers/basket'
@@ -45,9 +44,7 @@ const Navigation = ({totalBasketCount}) => {
       <div>
       <LoginDialog /> 
       <RegisterDialog /> 
-      <CartDialog count={totalBasketCount}> 
-        <Basket />
-      </CartDialog>
+      <Basket />
       </div>
     </Nav>
   );

@@ -2,7 +2,19 @@ import * as R from 'ramda';
 
 export const getProductById = (state, id) => R.prop(id, state.products)
 
-export const getProductBySlug = (state, slug) => R.prop(slug, state.products)
+export const getActiveSlug = ownProps => R.path(['match', 'params', 'slug'], ownProps)
+
+export const getProductBySlug = (state, ownProps) => {
+
+	const activeSlug = getActiveSlug(ownProps);
+
+	const hasActiveSlug = R.propEq('slug', activeSlug);
+
+	const product = Object.values(R.filter(hasActiveSlug, state.products))[0];
+
+    console.log(state.products)
+	return product
+}
 
 export const getActiveCategoryId = ownProps => R.path(['match', 'params', 'id'], ownProps)
 
@@ -27,7 +39,6 @@ export const getProducts = (state, ownProps) => {
 		R.when(R.always(activeCategoryUrl), R.filter(applyCategory)),
 		R.map(id => getProductById(state, id))
 		)(state.productsPage.ids)
-
 	return products
 }
 

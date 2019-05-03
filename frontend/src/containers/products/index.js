@@ -31,29 +31,6 @@ class Products extends Component {
       this.setState({ [name]: event.target.checked });
     };
 
-  componentWillUnmount() {
-    clearTimeout(this.timer);
-  }
-
-  handleButtonClick = () => {
-    if (!this.state.loading) {
-      this.setState(
-        {
-          success: false,
-          loading: true,
-        },
-        () => {
-          this.timer = setTimeout(() => {
-            this.setState({
-              loading: false,
-              success: true,
-            });
-          }, 1000);
-        },
-      );
-    }
-  };
-
   componentDidMount () {
     this.props.fetchProducts()
     this.props.fetchCategories()

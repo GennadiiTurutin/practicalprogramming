@@ -1,18 +1,18 @@
 import * as R from 'ramda';
 
 import {
-  FETCH_PRODUCT_BY_ID_SUCCESS,
+  FETCH_PRODUCT_BY_SLUG_SUCCESS,
 } from '../actionTypes'
 
 const initialState = {
-  id: null
+  slug: null
 }
 
 export default (state = initialState, {type, payload}) => {
   switch (type) {
-    case FETCH_PRODUCT_BY_ID_SUCCESS:
+    case FETCH_PRODUCT_BY_SLUG_SUCCESS:
       return R.merge(state, {
-  	    id: R.prop('id', payload)
+  	    slug: R.prop('slug', payload)
       })
     default: 
       return state

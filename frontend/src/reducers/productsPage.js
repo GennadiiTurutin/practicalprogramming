@@ -7,6 +7,7 @@ import {
 
 const initialState = {
 	ids: [],
+	slugs: [],
 	search: ''
 }
 

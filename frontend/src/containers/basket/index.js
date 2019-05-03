@@ -3,7 +3,21 @@ import {connect} from 'react-redux'
 import * as R from 'ramda';
 import { FaWindowClose } from 'react-icons/fa';
 import { Table } from 'react-bootstrap';
-import CartDialog from '../../components/dialog_cart';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import { compose } from 'redux'
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
+
+import IconButton from '@material-ui/core/IconButton';
+import Badge from '@material-ui/core/Badge';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Fab from '@material-ui/core/Fab';
+import CloseIcon from '@material-ui/icons/Close';
+import DoneIcon from '@material-ui/icons/Done';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import {
   getTotalBasketCount,
@@ -18,88 +32,168 @@ import {
 } from '../../actions'
 
 
-const Basket = (
-  { products, 
-    totalPrice, 
-    removeProductFromBasket, 
-    cleanBasket, 
-    basketCheckout, 
-    totalBasketCount,
+const styles = theme => ({
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 'auto',
+    width: 'fit-content',
+  },
+  formControl: {
+    marginTop: theme.spacing.unit * 2,
+    minWidth: 120,
+  },
+  formControlLabel: {
+    marginTop: theme.spacing.unit,
+  },
+  badge: {
+    top: '50%',
+    right: -3,
+    // The border color match the background color.
+    border: `2px solid ${
+      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
+    }`,
+  },
+  fab: {
+    margin: theme.spacing.unit,
+  },
+  extendedIcon: {
+    marginRight: theme.spacing.unit,
+  },
+});
+
+class Basket extends React.Component {
+  state = {
+    open: false,
+    fullWidth: true,
+    maxWidth: 'md'
+  };
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleCheckout = () => {
+    this.props.basketCheckout(this.props.products);
+  };
+
+  handleDelete = () => {
+    this.props.cleanBasket();
+  };
+
+  render() {
+    const { classes } = this.props;
+    const isBasketEmpty = R.isEmpty(this.props.products)
+
+    return ( 
+        <React.Fragment>
+
+          <IconButton aria-label="Cart" color="primary" className="text-grey" onClick={this.handleClickOpen}>
+            <Badge badgeContent={this.props.totalBasketCount} color="primary" classes={{ badge: classes.badge }}>
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+
+          <Dialog
+            fullWidth={this.state.fullWidth}
+            maxWidth={this.state.maxWidth}
+            open={this.state.open}
+            onClose={this.handleClose}
+            aria-labelledby="dialog">
+
+            <DialogTitle id="dialog">Shopping cart</DialogTitle>
+            <DialogContent>
+                <div className='view-container'>
+                  <div className='container my-4'>
+                    <div className='row'>
+                      <div className='col-md-12'>
+                        <div className='container my-4 text-center'>
+                          {isBasketEmpty && 
+                            <div className="container">
+                              <h1>Your shopping cart is empty</h1>
+                            </div>
+                          }
+         
+                          { R.not(isBasketEmpty) &&
+                            <div>
+                              <div className='container py-4'>
+                                <Table striped bordered hover size="sm" variant="light">
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Item</th>
+                                      <th>Price</th>
+                                      <th>Amount</th>
+                                      <th>Delete</th>
+                                    </tr>
+                                  </thead>
+                                  {this.props.products.map((product, index) => (
+                                  <tbody key={index}>
+                                    <tr>
+                                      <td>{index + 1}</td>
+                                      <td>{product.title}</td>
+                                      <td>${product.price}</td>
+                                      <td>{product.count}</td>
+                                      <td>
+                                      <FaWindowClose onClick={() => this.props.removeProductFromBasket(product.id)} />
+                                      </td>
+                                    </tr>
+                                  </tbody>  
+                                  ))}
+                                </Table>
+                              </div>
+                              <div className='container text-right'>
+                                  <h4><b>Total: </b>
+                                  ${this.props.totalPrice}
+                                  </h4>
+                              </div>
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+            </DialogContent>
+            <DialogActions>
+            {!isBasketEmpty &&
+              <div>
+              <Fab color="primary" 
+                   onClick={this.handleCheckout} 
+                   aria-label="Add" 
+                   className={classes.fab}>
+                <DoneIcon />
+              </Fab>
+              <Fab color="secondary" 
+                   onClick={this.handleDelete} 
+                   aria-label="Delete" 
+                   className={classes.fab}>
+                <DeleteIcon />
+              </Fab>
+              </div>
+            }
+              <Fab color="secondary" 
+                   onClick={this.handleClose} 
+                   aria-label="Close" 
+                   className={classes.fab}>
+                <CloseIcon />
+              </Fab>
+            </DialogActions>
+          </Dialog>
+        </React.Fragment>
+    )
   }
-  ) => {
-
-  const isBasketEmpty = R.isEmpty(products)
-
-  return (
-    <div className='container my-4'>
-
-    <CartDialog count={totalBasketCount} price={totalPrice}> 
-     <div className='view-container'>
-       <div className='container my-4'>
-         <div className='row'>
-           <div className='col-md-12'>
-             <div className='container my-4 text-center'>
-               {isBasketEmpty && 
-                 <div className="container">
-                   Your shopping cart is empty
-                 </div>
-               }
-               
-               { R.not(isBasketEmpty) &&
-                 <div>
-                   <div className='container py-4'>
-                     <Table striped bordered hover size="sm" variant="light">
-                       <thead>
-                         <tr>
-                           <th>#</th>
-                           <th>Item</th>
-                           <th>Price</th>
-                           <th>Amount</th>
-                           <th>Delete</th>
-                         </tr>
-                       </thead>
-                       {products.map((product, index) => (
-                       <tbody key={index}>
-                         <tr>
-                           <td>{index + 1}</td>
-                           <td>{product.title}</td>
-                           <td>${product.price}</td>
-                           <td>{product.count}</td>
-                           <td>
-                           <FaWindowClose onClick={() => removeProductFromBasket(product.id)} />
-                           </td>
-                         </tr>
-                       </tbody>  
-                       ))}
-                     </Table>
-                   </div>
-                   <div className='container text-right'>
-                       <h4><b>Total: </b>
-                       ${totalPrice}
-                       </h4>
-                   </div>
-                   <div class="container text-right">
-                       <button className='btn btn-outline-danger mr-2 my-4'
-                               onClick={() => cleanBasket()}>
-                         Clean cart
-                       </button>
-                       <button 
-                         onClick={() => basketCheckout(products)}
-                         className='btn btn-outline-success my-4'>
-                         Checkout
-                       </button>
-                   </div>
-                 </div>
-               }
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
-     </CartDialog>
-     </div>
-  )
 }
+
+
+Basket.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = state => {
   return {
@@ -115,4 +209,4 @@ const mapDispatchToProps = {
   basketCheckout
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Basket)
+export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(Basket)

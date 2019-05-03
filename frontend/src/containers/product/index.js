@@ -9,12 +9,13 @@ import Sidebar from '../../components/sidebar';
 
 class Product extends Component {
   componentDidMount () {
-    this.props.fetchProductBySlug(this.props.match.params.slug)
+    //this.props.fetchProductBySlug(this.props.match.params.slug)
   }
 
   
   renderProduct () {
     const {product, addProductToBasket} = this.props
+    console.log('This is a product: ', product)
     return (
       <div className="container my-4 text-grey"> 
         <div className='form-group'>
@@ -55,9 +56,9 @@ class Product extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    product: getProductBySlug(state, state.productPage.slug)
+    product: getProductBySlug(state, ownProps)
   }
 }
 

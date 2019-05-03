@@ -13,7 +13,9 @@ const Sidebar = () => {
       <BasketInfo />
       </div>
       <div className="container text-center">
-      <Basket />
+        <div className='container my-4'>
+          <Basket />
+        </div>
       </div>
     </div>
   )
