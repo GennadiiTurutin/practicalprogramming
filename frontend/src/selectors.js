@@ -27,8 +27,8 @@ export const getProducts = (state, ownProps) => {
 	)
 
 	const applySearch = item => R.contains(
-		state.productsPage.search,
-		R.prop('title', item)
+		state.productsPage.search.toLowerCase(),
+		(R.prop('title', item)).toLowerCase()
 	)
 	
 	const products = R.compose(
