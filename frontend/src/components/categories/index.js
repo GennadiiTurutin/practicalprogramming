@@ -13,7 +13,9 @@ const Categories = ({categories, activeCategoryId}) => {
 
     const categoryActive = R.equals(category.id, Number(activeCategoryId));
 
-    const SelectCategory = props => <Link to={`/categories/${category.id}`} {...props} />
+    const link = (categoryActive === true) ? `/` : `/categories/${category.id}`;
+
+    const SelectCategory = props => <Link to={link} {...props} /> 
 
   	return (
       <Button aria-label="Category" color="primary" component={SelectCategory} key={index}>
