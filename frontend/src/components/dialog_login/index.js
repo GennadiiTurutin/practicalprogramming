@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import { Redirect } from "react-router-dom";
@@ -126,17 +124,14 @@ class LoginDialog extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="dialog">
           <DialogTitle id="dialog">Login</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              <form className={classes.container} 
-                    noValidate 
-                    autoComplete="off">
+            <div className="container">
+              <form className={classes.container}>
                   <TextField
                     id="username"
                     label="Username"
                     style={{ margin: 8 }}
                     fullWidth
-                    value={this.state.username}
+                    value={this.state.username || ''}
                     onChange={this.handleUsernameChange}
                     margin="normal"
                     variant="outlined"
@@ -149,7 +144,7 @@ class LoginDialog extends React.Component {
                     label="Password"
                     style={{ margin: 8 }}
                     fullWidth
-                    value={this.state.password}
+                    value={this.state.password || ''}
                     onChange={this.handlePasswordChange}
                     margin="normal"
                     variant="outlined"
@@ -160,8 +155,7 @@ class LoginDialog extends React.Component {
                     }}
                   />
               </form>
-            </DialogContentText>
-          </DialogContent>
+            </div>
           <DialogActions>
             <Fab color="primary" 
                  type="button"

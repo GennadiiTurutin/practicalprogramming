@@ -31,9 +31,9 @@ import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAILURE,
 
-  REMOVE_PRODUCT_FROM_BASKET,
-  CLEAN_BASKET,
   ADD_PRODUCT_TO_BASKET,
+  DELETE_PRODUCT,
+  CLEAN_BASKET,
   SEARCH_PRODUCT
 } from '../actionTypes'
 import {
@@ -132,6 +132,13 @@ export const fetchUserById = id => async dispatch => {
   }
 }
 
+export const deleteProduct = id => dispatch => {
+  dispatch({
+    type: DELETE_PRODUCT,
+    payload: id
+  })
+}
+
 export const addProductToBasket = id => dispatch => {
   dispatch({
     type: ADD_PRODUCT_TO_BASKET,
@@ -143,13 +150,6 @@ export const searchProduct = text => dispatch => {
   dispatch({
     type: SEARCH_PRODUCT,
     payload: text
-  })
-}
-
-export const removeProductFromBasket = id => async dispatch => {
-  dispatch({
-    type: REMOVE_PRODUCT_FROM_BASKET,
-    payload: id
   })
 }
 

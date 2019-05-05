@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { register } from "../../actions";
 import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import { Redirect } from "react-router-dom";
@@ -134,8 +132,7 @@ class RegisterDialog extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="dialog">
           <DialogTitle id="dialog">Register</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
+            <div className="container">
               <form className={classes.container} 
                     noValidate 
                     autoComplete="off">
@@ -145,7 +142,7 @@ class RegisterDialog extends React.Component {
                       style={{ margin: 8 }}
                       placeholder="Preferred username"
                       margin="normal"
-                      value={this.state.username}
+                      value={this.state.username || ''}
                       onChange={this.handleUsernameChange}
                       variant="outlined"
                       InputLabelProps={{
@@ -158,7 +155,7 @@ class RegisterDialog extends React.Component {
                       style={{ margin: 8 }}
                       fullWidth
                       margin="normal"
-                      value={this.state.email}
+                      value={this.state.email || ''}
                       onChange={this.handleEmailChange}
                       variant="outlined"
                       InputLabelProps={{
@@ -173,7 +170,7 @@ class RegisterDialog extends React.Component {
                       margin="normal"
                       variant="outlined"
                       type="password"
-                      value={this.state.password}
+                      value={this.state.password || ''}
                       onChange={this.handlePasswordChange}
                       autoComplete="current-password"
                       helperText="Your password might include anything"
@@ -189,7 +186,7 @@ class RegisterDialog extends React.Component {
                       fullWidth
                       margin="normal"
                       variant="outlined"
-                      value={this.state.confirmation}
+                      value={this.state.confirmation || ''}
                       onChange={this.handleConfirmationChange}
                       type="password"
                       autoComplete="current-password"
@@ -198,8 +195,7 @@ class RegisterDialog extends React.Component {
                       }}
                     />
               </form>
-            </DialogContentText>
-          </DialogContent>
+            </div>
           <DialogActions>
             <Fab color="primary" 
                  type="button"

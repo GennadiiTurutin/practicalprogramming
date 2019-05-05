@@ -6,13 +6,10 @@ export const getActiveSlug = ownProps => R.path(['match', 'params', 'slug'], own
 
 export const getProductBySlug = (state, ownProps) => {
 
-	const activeSlug = getActiveSlug(ownProps);
-
-	const hasActiveSlug = R.propEq('slug', activeSlug);
+	const hasActiveSlug = R.propEq('slug', getActiveSlug(ownProps));
 
 	const product = Object.values(R.filter(hasActiveSlug, state.products))[0];
-
-    console.log(state.products)
+	
 	return product
 }
 

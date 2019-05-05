@@ -5,40 +5,40 @@ import {getCategories, getActiveCategoryId} from '../../selectors'
 import {compose} from 'redux'
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
+import * as R from 'ramda';
 
 const Categories = ({categories, activeCategoryId}) => {
   
   const renderCategory = (category, index) => {
+
+    const categoryActive = R.equals(category.id, Number(activeCategoryId));
+
     const SelectCategory = props => <Link to={`/categories/${category.id}`} {...props} />
 
   	return (
       <Button aria-label="Category" color="primary" component={SelectCategory} key={index}>
         <div className="container text-left text-grey">
-        <h5>
-          <Checkbox
-            checked={false}
-            value="checkedA"
-          />
-          {category.title}
-        </h5>
+          <h5>
+            <Checkbox
+              checked={categoryActive}
+            />
+            {category.title}
+          </h5>
         </div>
       </Button>
 	  )
   }
 
   const renderAllCategory = () => {
-    const AllCategories = props => <Link to="/" {...props} />
 
+    const AllCategories = props => <Link to="/" {...props} />
   	return (
       <Button aria-label="Category" color="primary" component={AllCategories}>
         <div className="container text-left text-grey">
-        <h5>
-          <Checkbox
-            checked={false}
-            value="checkedA"
-          />
-          All categories
-        </h5>
+          <h5>
+            <Checkbox checked={ activeCategoryId===undefined }/>
+            All categories
+          </h5>
         </div>
       </Button>
   	)

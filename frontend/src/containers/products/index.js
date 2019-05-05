@@ -16,20 +16,16 @@ import {
   fetchProducts,
   addProductToBasket,
   fetchCategories,
-  removeProductFromBasket
+  deleteProduct
 } from '../../actions'
 
 import {getProducts} from '../../selectors'
 
 class Products extends Component {
-  state = {
-     success: false,
-     checked: true,
-  };
 
-  handleChange = name => event => {
-      this.setState({ [name]: event.target.checked });
-    };
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
 
   componentDidMount () {
     this.props.fetchProducts()
@@ -37,9 +33,7 @@ class Products extends Component {
   }
 
   renderProduct(product, index) {
-    const {addProductToBasket} = this.props
     const shortDescription = `${R.take(100, product.description)}...`
-    
     return (
         <div className="col-lg-12 my-4" key={index}>
           <div className="text-left text-grey">
@@ -54,19 +48,20 @@ class Products extends Component {
             <div className="container text-right">
               <FormControlLabel 
                 control={
-                  <Checkbox icon={<ShoppingCart  />} checkedIcon={<CheckIcon />} value="checkedH" 
-                  onClick={() => { this.handleButtonClick(); addProductToBasket(product.id)}}/>
+                  <Checkbox icon={<ShoppingCart />} checkedIcon={<CheckIcon />} 
+                  onClick={() => { this.props.addProductToBasket(product.id) }} />
                 }
               />
               <FormControlLabel 
                 control={
-                  <Checkbox icon={<DeleteIcon  />} checkedIcon={<DeleteIcon disabled />} value="checkedH" 
-                  onClick={() => { this.handleButtonClick(); removeProductFromBasket(product.id)}}/>
+                  <Checkbox icon={<DeleteIcon  />} checkedIcon={<DeleteIcon />}
+                  onClick={() => { this.props.deleteProduct(product.id) }} />
                 }
               />
               <FormControlLabel
                 control={
-                  <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} value="checkedH" />
+                  <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} 
+                  onClick={() => { console.log('Like') }} />
                 }
               />
             </div>
@@ -111,7 +106,7 @@ const mapDispatchToProps = {
   fetchProducts, 
   addProductToBasket,
   fetchCategories,
-  removeProductFromBasket
+  deleteProduct
 }
 
 

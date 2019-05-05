@@ -26,7 +26,7 @@ import {
 } from '../../selectors'
 
 import {
-  removeProductFromBasket,
+  deleteProduct,
   cleanBasket, 
   basketCheckout
 } from '../../actions'
@@ -139,7 +139,7 @@ class Basket extends React.Component {
                                       <td>${product.price}</td>
                                       <td>{product.count}</td>
                                       <td>
-                                      <FaWindowClose onClick={() => this.props.removeProductFromBasket(product.id)} />
+                                      <FaWindowClose onClick={() => this.props.deleteProduct(product.id)} />
                                       </td>
                                     </tr>
                                   </tbody>  
@@ -204,7 +204,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  removeProductFromBasket,
+  deleteProduct,
   cleanBasket, 
   basketCheckout
 }

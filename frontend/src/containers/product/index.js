@@ -1,21 +1,27 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import CheckIcon from '@material-ui/icons/Check';
+import DeleteIcon from '@material-ui/icons/Delete';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Favorite from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
-import {fetchProductBySlug, addProductToBasket} from '../../actions'
+import {
+  fetchProductBySlug, 
+  addProductToBasket,
+  deleteProduct
+} from '../../actions'
+
 import {getProductBySlug} from '../../selectors';
 
 import Sidebar from '../../components/sidebar';
 
 class Product extends Component {
-  componentDidMount () {
-    //this.props.fetchProductBySlug(this.props.match.params.slug)
-  }
 
-  
   renderProduct () {
     const {product, addProductToBasket} = this.props
-    console.log('This is a product: ', product)
     return (
       <div className="container my-4 text-grey"> 
         <div className='form-group'>
@@ -23,17 +29,28 @@ class Product extends Component {
           <p>{product.description}</p>
           <h2>${product.price}</h2>
         </div>
+        <div className="container text-right">
+          <FormControlLabel 
+            control={
+              <Checkbox icon={<ShoppingCart  />} checkedIcon={<CheckIcon />} value="checkedH" 
+              onClick={() => addProductToBasket(product.id)}
+              />
+            }
+          />
+          <FormControlLabel 
+            control={
+              <Checkbox icon={<DeleteIcon  />} checkedIcon={<DeleteIcon disabled />} value="checkedH" 
+              onClick={() => deleteProduct(product.id)}
+              />
+            }
+          />
+          <FormControlLabel
+            control={
+              <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} value="checkedH" />
+            }
+          />
 
-        <button 
-          onClick={() => addProductToBasket(product.id)}
-          className='btn btn-outline-success mr-2 my-4'>
-          Add to cart
-        </button>
-        <Link 
-          to='/'
-          className='btn btn-outline-secondary mx-2 my-4'>
-          Back to store
-        </Link>
+        </div>
 
       </div>
     )
@@ -64,7 +81,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = {
   fetchProductBySlug,
-  addProductToBasket
+  addProductToBasket,
+  deleteProduct
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product)

@@ -2,7 +2,7 @@ import * as R from 'ramda';
 
 import {
 	ADD_PRODUCT_TO_BASKET,
-	REMOVE_PRODUCT_FROM_BASKET, 
+	DELETE_PRODUCT, 
 	CLEAN_BASKET
 } from '../actionTypes'
 
@@ -12,7 +12,7 @@ export default (state = initialState, {type, payload}) => {
 	switch (type) {
 		case ADD_PRODUCT_TO_BASKET:
 		  return R.append(payload, state)
-		case REMOVE_PRODUCT_FROM_BASKET:
+		case DELETE_PRODUCT:
 		  return R.without(R.of(payload), state)
 		case CLEAN_BASKET:
 		  return []
