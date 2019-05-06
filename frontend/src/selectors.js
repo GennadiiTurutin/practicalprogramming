@@ -15,6 +15,12 @@ export const getProductBySlug = (state, ownProps) => {
 
 export const getActiveCategoryId = ownProps => R.path(['match', 'params', 'id'], ownProps)
 
+export const getActiveUser = (state) => {
+	
+    const activeUser = state.authorization
+
+	return activeUser
+}
 export const getProducts = (state, ownProps) => {
 
 	const activeCategoryId = getActiveCategoryId(ownProps)

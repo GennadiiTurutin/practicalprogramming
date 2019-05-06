@@ -6,6 +6,7 @@ import productsPage from './productsPage'
 import productPage from './productPage'
 import basket from './basket'
 import categories from './categories'
+import authorization from './authorization'
 
 export default combineReducers({
 	routing: routerReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
 	productsPage,
 	productPage,
 	basket,
-	categories
+	categories,
+	authorization
 })

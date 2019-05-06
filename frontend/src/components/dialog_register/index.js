@@ -221,8 +221,12 @@ RegisterDialog.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+const mapStateToProps = state => ({
+  isAuthenticated: state.authorization.isAuthenticated
+});
+
 const mapDispatchToProps = {
   register
 }
 
-export default compose(withStyles(styles), connect(null, mapDispatchToProps))(RegisterDialog)
+export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(RegisterDialog)

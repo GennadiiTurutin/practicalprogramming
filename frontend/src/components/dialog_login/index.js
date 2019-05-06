@@ -107,11 +107,6 @@ class LoginDialog extends React.Component {
 
   render() {
     const { classes } = this.props;
-
-    if (this.props.isAuthenticated) {
-      return <Redirect to='/' />;
-    }
-
     return (
       <React.Fragment>
         <Button aria-label="Login" color="primary" onClick={this.handleClickOpen} className={classes.button}>
@@ -181,8 +176,12 @@ LoginDialog.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+const mapStateToProps = state => ({
+  isAuthenticated: state.authorization.isAuthenticated
+});
+
 const mapDispatchToProps = {
   login
 }
 
-export default compose(withStyles(styles), connect(null, mapDispatchToProps))(LoginDialog)
+export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(LoginDialog)

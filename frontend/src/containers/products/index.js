@@ -16,24 +16,37 @@ import {
   fetchProducts,
   addProductToBasket,
   fetchCategories,
-  deleteProduct
+  deleteProduct,
+  fetchUserById
 } from '../../actions'
 
-import {getProducts} from '../../selectors'
+import { getProducts, getActiveUser } from '../../selectors'
 
 class Products extends Component {
+  state = {
+    isAuthenticated: true,
+  };
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    this.setState({ 
+      open: true, 
+    });
   };
 
   componentDidMount () {
     this.props.fetchProducts()
     this.props.fetchCategories()
+    //this.props.fetchUserById(this.state.id)
   }
 
   renderProduct(product, index) {
     const shortDescription = `${R.take(100, product.description)}...`
+    const productInBasket = true
+    const productBought = false
+    const { user } = this.props;
+    console.log('User from products: ', user)
+    //const productBought = product => R.contains{user.products, product.id}
+
     return (
         <div className="col-lg-12 my-4" key={index}>
           <div className="text-left text-grey">
@@ -47,18 +60,22 @@ class Products extends Component {
 
             <div className="container text-right">
               <FormControlLabel 
+                disabled={!this.state.isAuthenticated || productBought}
+                checked ={productInBasket}
                 control={
                   <Checkbox icon={<ShoppingCart />} checkedIcon={<CheckIcon />} 
                   onClick={() => { this.props.addProductToBasket(product.id) }} />
                 }
               />
-              <FormControlLabel 
+              <FormControlLabel
+                disabled={!this.state.isAuthenticated} 
                 control={
                   <Checkbox icon={<DeleteIcon  />} checkedIcon={<DeleteIcon />}
                   onClick={() => { this.props.deleteProduct(product.id) }} />
                 }
               />
               <FormControlLabel
+                disabled={!this.state.isAuthenticated}
                 control={
                   <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} 
                   onClick={() => { console.log('Like') }} />
@@ -66,7 +83,7 @@ class Products extends Component {
               />
             </div>
           </div>
-      </div>
+        </div>
     )
   }
 
@@ -98,7 +115,8 @@ class Products extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    products: getProducts(state, ownProps)
+    products: getProducts(state, ownProps),
+    user: getActiveUser(state)
   }
 }
 
@@ -106,7 +124,7 @@ const mapDispatchToProps = {
   fetchProducts, 
   addProductToBasket,
   fetchCategories,
-  deleteProduct
+  deleteProduct,
 }
 
 

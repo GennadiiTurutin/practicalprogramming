@@ -38,6 +38,13 @@ export const fetchUserById = async id => {
 	})
 };
 
+export const fetchProductsForProfile = async id => {
+  return new Promise(resolve => {
+    const response = axios.get("http://127.0.0.1:8000/users/", id, '/')
+    resolve(response)
+  })
+};
+
 
 export const loadUser = async id => {
   return new Promise(resolve => {
@@ -46,9 +53,7 @@ export const loadUser = async id => {
   })
 };
 
-
 export const login = async ( username, password ) => {
-  console.log("Inside api func: ", username, password)
   return new Promise(resolve => {
     const config = {
       headers: {
@@ -57,7 +62,6 @@ export const login = async ( username, password ) => {
     };
     const body = JSON.stringify({ username, password });
     const response = axios.post("http://127.0.0.1:8000/auth/login", body, config)
-    console.log(response)
     resolve(response)
   })
 };

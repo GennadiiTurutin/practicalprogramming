@@ -170,8 +170,9 @@ export const login = ( username, password ) => async dispatch => {
     const user = await loginUserApi(username, password)
     dispatch({
       type: LOGIN_USER_SUCCESS,
-      payload: user
+      payload: user.data
     })
+    console.log(user.data)
   } catch (err) {
     dispatch({
       type: LOGIN_USER_FAILURE,

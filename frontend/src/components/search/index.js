@@ -59,40 +59,31 @@ class Search extends Component {
 		super(props)
 		this.state = { value: ''}
 		this.handleChange = this.handleChange.bind(this)
-		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	handleChange (event) {
-		this.setState({
-			value: event.target.value
-		})
-	}
-
-	handleSubmit (event) {
-		event.preventDefault()
-		this.props.searchProduct(this.state.value)
+		this.setState({ value: event.target.value })
+    this.props.searchProduct(this.state.value)
 	}
 
 	render() {
 		const { classes } = this.props;
 		return (
-                <div className="container">
-				    <form onSubmit={this.handleSubmit}>
-					    <div className={classes.search}>
-		                  <div className={classes.searchIcon}>
-		                    <SearchIcon />
-		                  </div>
-		                  <InputBase
-		                    placeholder="Search…"
-		                    onChange={this.handleChange}
-		                    classes={{
-		                      root: classes.inputRoot,
-		                      input: classes.inputInput,
-		                    }}
-		                  />
-		                </div>
-	                </form>
-			    </div>
+      <div className="container">
+			    <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              onChange={this.handleChange}
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+            />
+          </div>
+	    </div>
 		)
 	}
 }
