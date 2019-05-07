@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
-import { Redirect } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'
 import { compose } from 'redux'

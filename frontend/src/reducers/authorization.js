@@ -11,7 +11,8 @@ const initialState = {
 	username: '',
 	email: '',
 	token: '',
-	authenticated: false
+	authenticated: false,
+	products: ''
 }
 
 export default (state = initialState, {type, payload}) => {
@@ -21,6 +22,7 @@ export default (state = initialState, {type, payload}) => {
 	  	    id: R.prop('id', payload),
 	  	    username: R.prop('username', payload),
 	  	    email: R.prop('email', payload),
+	  	    products: R.prop('products', payload),
 	  	    token: R.prop('token', payload),
 	  	    authenticated: R.prop('authenticated', payload)
 		  })

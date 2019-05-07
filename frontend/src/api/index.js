@@ -31,9 +31,9 @@ export const fetchCategories = async () => {
 };
 
 
-export const fetchUserById = async id => {
+export const fetchProfileById = async id => {
 	return new Promise(resolve => {
-		const response = axios.get("http://127.0.0.1:8000/users/", id, '/')
+		const response = axios.get("http://127.0.0.1:8000/profiles/", id, '/')
 		resolve(response)
 	})
 };

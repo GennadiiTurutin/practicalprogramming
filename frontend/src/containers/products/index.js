@@ -17,7 +17,6 @@ import {
   addProductToBasket,
   fetchCategories,
   deleteProduct,
-  fetchUserById
 } from '../../actions'
 
 import { getProducts, getActiveUser } from '../../selectors'
@@ -36,7 +35,6 @@ class Products extends Component {
   componentDidMount () {
     this.props.fetchProducts()
     this.props.fetchCategories()
-    //this.props.fetchUserById(this.state.id)
   }
 
   renderProduct(product, index) {
@@ -44,7 +42,7 @@ class Products extends Component {
     const productInBasket = true
     const productBought = false
     const { user } = this.props;
-    console.log('User from products: ', user)
+   
     //const productBought = product => R.contains{user.products, product.id}
 
     return (

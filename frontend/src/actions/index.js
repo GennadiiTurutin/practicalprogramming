@@ -40,7 +40,7 @@ import {
   fetchProducts as fetchProductsApi,
   fetchProductById as fetchProductByIdApi,
   fetchProductBySlug as fetchProductBySlugApi,
-  fetchUserById as fetchUserByIdApi,
+  fetchProfileById as fetchProfileByIdApi,
   fetchCategories as fetchCategoriesApi,
   login as loginUserApi,
   register as registerUserApi,
@@ -115,10 +115,10 @@ export const fetchProductBySlug = slug => async dispatch => {
   }
 }
 
-export const fetchUserById = id => async dispatch => {
+export const fetchProfileById = id => async dispatch => {
   dispatch({type: FETCH_USER_BY_ID_START})
   try {
-    const user = await fetchUserByIdApi(id)
+    const user = await fetchProfileByIdApi(id)
     dispatch({
       type: FETCH_USER_BY_ID_SUCCESS,
       payload: user

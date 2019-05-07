@@ -5,6 +5,8 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from django.contrib.auth.models import User
+from profiles.models import Profile
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -22,17 +24,21 @@ class RegisterAPI(generics.GenericAPIView):
 # Login API
 class LoginAPI(generics.GenericAPIView):
   serializer_class = LoginSerializer
+  
 
   def post(self, request, *args, **kwargs):
     serializer = self.get_serializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     user = serializer.validated_data
+    profile = Profile.objects.get(id=1)
+
     return Response({
-      #"user": UserSerializer(user, context=self.get_serializer_context()).data,
       "id": UserSerializer(user, context=self.get_serializer_context()).data["id"],
       "username": UserSerializer(user, context=self.get_serializer_context()).data["username"],
       "email": UserSerializer(user, context=self.get_serializer_context()).data["email"],
+      "user": UserSerializer(user, context=self.get_serializer_context()).data["user"],
       "authenticated": True,
+      "products": user.user.products.values('id'),
       "token": AuthToken.objects.create(user)[1]
     })
 

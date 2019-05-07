@@ -21,6 +21,8 @@ export const getActiveUser = (state) => {
 
 	return activeUser
 }
+
+
 export const getProducts = (state, ownProps) => {
 
 	const activeCategoryId = getActiveCategoryId(ownProps)
