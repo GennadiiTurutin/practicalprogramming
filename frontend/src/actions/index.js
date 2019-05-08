@@ -164,7 +164,6 @@ export const basketCheckout = products => () => {
 }
 
 export const login = ( username, password ) => async dispatch => {
-  console.log('Inside dispatcher ', username, password)
   dispatch({type: LOGIN_USER_START})
   try {
     const user = await loginUserApi(username, password)
@@ -172,7 +171,6 @@ export const login = ( username, password ) => async dispatch => {
       type: LOGIN_USER_SUCCESS,
       payload: user.data
     })
-    console.log(user.data)
   } catch (err) {
     dispatch({
       type: LOGIN_USER_FAILURE,

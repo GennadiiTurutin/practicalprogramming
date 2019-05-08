@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import * as R from 'ramda';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import CheckIcon from '@material-ui/icons/Check';
-import DeleteIcon from '@material-ui/icons/Delete';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Favorite from '@material-ui/icons/Favorite';
@@ -14,14 +14,48 @@ import {
   deleteProduct
 } from '../../actions'
 
-import {getProductBySlug} from '../../selectors';
+import {
+  getProductBySlug,
+  getActiveUser,
+  getBasketProductsWithCount
+} from '../../selectors';
 
 import Sidebar from '../../components/sidebar';
 
 class Product extends Component {
 
+  handleBasket = (product) => {
+    if (R.find(R.propEq('id', product.id))(this.props.basket)) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+
+  handleProducts = (product) => {
+    if (R.find(R.propEq('id', product.id))(this.props.user.products)!==undefined) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+
+  handleClick = (product) => {
+    if (this.handleBasket(product)) {
+      this.props.deleteProduct(product.id)
+    } 
+    else {
+      this.props.addProductToBasket(product.id)
+    }
+  }
+
+
   renderProduct () {
-    const {product, addProductToBasket} = this.props
+    const { product } = this.props
+    const { user } = this.props;
+    const productBought = this.handleProducts(product);
     return (
       <div className="container my-4 text-grey"> 
         <div className='form-group'>
@@ -31,22 +65,20 @@ class Product extends Component {
         </div>
         <div className="container text-right">
           <FormControlLabel 
+            disabled={!user.authenticated || productBought}
+            checked={productBought || this.handleBasket(product)}
             control={
-              <Checkbox icon={<ShoppingCart  />} checkedIcon={<CheckIcon />} value="checkedH" 
-              onClick={() => addProductToBasket(product.id)}
-              />
-            }
-          />
-          <FormControlLabel 
-            control={
-              <Checkbox icon={<DeleteIcon  />} checkedIcon={<DeleteIcon disabled />} value="checkedH" 
-              onClick={() => deleteProduct(product.id)}
-              />
+              <Checkbox 
+              icon={<ShoppingCart />} 
+              checkedIcon={<CheckIcon />} 
+              onClick={() => { this.handleClick(product) }} />
             }
           />
           <FormControlLabel
+            disabled={!user.authenticated}
             control={
-              <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} value="checkedH" />
+              <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} 
+              onClick={() => { console.log('Like') }} />
             }
           />
 
@@ -75,7 +107,9 @@ class Product extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    product: getProductBySlug(state, ownProps)
+    product: getProductBySlug(state, ownProps),
+    user: getActiveUser(state),
+    basket: getBasketProductsWithCount(state)
   }
 }
 
