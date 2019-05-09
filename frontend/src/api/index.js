@@ -46,12 +46,6 @@ export const fetchProductsForProfile = async id => {
 };
 
 
-export const loadUser = async id => {
-  return new Promise(resolve => {
-    const response = axios.get("http://127.0.0.1:8000/users/", id, '/')
-    resolve(response)
-  })
-};
 
 export const login = async ( username, password ) => {
   return new Promise(resolve => {
@@ -79,22 +73,4 @@ export const register = async ( username, email, password ) => {
   })
 };
 
-export const logout = async () => {
-  return new Promise(resolve => {
-    const response = axios.post("http://127.0.0.1:8000/auth/logout", null, tokenConfig())
-    resolve(response)
-  })
-}; 
 
-export const tokenConfig = () => getState => {
-  const token = getState().auth.token;
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-  if (token) {
-    config.headers["Authorization"] = `Token ${token}`;
-  }
-  return config;
-};

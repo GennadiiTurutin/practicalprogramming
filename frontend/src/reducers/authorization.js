@@ -29,7 +29,7 @@ export default (state = initialState, {type, payload}) => {
 		case REGISTER_USER_SUCCESS:
 		  return R.append(payload, state)
 		case LOGOUT_USER_SUCCESS:
-		  return []
+		  return initialState
 		default:
 			return state
 	}

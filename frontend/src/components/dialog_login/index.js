@@ -76,7 +76,7 @@ class LoginDialog extends React.Component {
 
   static propTypes = {
     login: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool
+    authenticated: PropTypes.bool
   };
 
   handleClickOpen = () => {
@@ -176,7 +176,7 @@ LoginDialog.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.authorization.isAuthenticated
+  authenticated: state.authorization.authenticated
 });
 
 const mapDispatchToProps = {

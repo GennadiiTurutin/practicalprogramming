@@ -44,8 +44,9 @@ import {
   fetchCategories as fetchCategoriesApi,
   login as loginUserApi,
   register as registerUserApi,
-  logout as logoutUserApi,
 } from '../api'
+
+import axios from "axios";
 
 export const fetchProducts = () => async dispatch => {
   dispatch({type: FETCH_PRODUCTS_START})
@@ -197,10 +198,10 @@ export const register = ( username, email, password ) => async dispatch => {
   }
 }
 
-export const logout = () => async dispatch => {
+export const logout = () => (dispatch, getState) => {
   dispatch({type: LOGOUT_USER_START})
   try {
-    await logoutUserApi()
+    axios.post("/auth/logout", null, tokenConfig(getState))
     dispatch({
       type: LOGOUT_USER_SUCCESS,
     })
@@ -211,4 +212,17 @@ export const logout = () => async dispatch => {
       error: true
     })
   }
+}
+
+const tokenConfig = getState => {
+  const token = getState().authorization.token;
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  if (token) {
+    config.headers["Authorization"] = `Token ${token}`;
+  }
+  return config;
 }
