@@ -19,16 +19,12 @@ import {
 class Navigation extends Component {
 
   onLogout = () => {
-    console.log('Start logout')
     this.props.logout()
   };
   
   render () {
       const authLinks = (
         <Nav className="ml-auto my-2">
-          <Button aria-label="Classroom" color="primary" className="text-grey">
-            Classroom
-          </Button>
           <PopupState variant="popover" popupId="demo-popup-menu">
             {popupState => (
               <React.Fragment>

@@ -1,6 +1,5 @@
 import * as R from 'ramda';
-import products from './products'
-import axios from "axios";
+import axios from 'axios';
 
 export const fetchProducts = async () => {
 	return new Promise(resolve => {
@@ -9,17 +8,24 @@ export const fetchProducts = async () => {
 	})
 };
 
-export const fetchProductById = async id => {
+export const fetchProductById = async (id, products) => {
 	return new Promise((resolve, reject) => {
 		const product = R.find(R.propEq('id', id), products)
 		resolve(product)	
 	})
 }
 
-export const fetchProductBySlug = async slug => {
+export const fetchProductBySlug = async (slug, products)  => {
   return new Promise((resolve, reject) => {
     const product = R.find(R.propEq('slug', slug), products)
     resolve(product)  
+  })
+}
+
+export const fetchProductsByUser = async username => {
+  return new Promise((resolve, reject) => {
+    const response = axios.get("http://127.0.0.1:8000/classroom/", username, '/')
+    resolve(response)  
   })
 }
 
@@ -37,15 +43,6 @@ export const fetchProfileById = async id => {
 		resolve(response)
 	})
 };
-
-export const fetchProductsForProfile = async id => {
-  return new Promise(resolve => {
-    const response = axios.get("http://127.0.0.1:8000/users/", id, '/')
-    resolve(response)
-  })
-};
-
-
 
 export const login = async ( username, password ) => {
   return new Promise(resolve => {

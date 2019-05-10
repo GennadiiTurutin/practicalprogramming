@@ -47,6 +47,12 @@ export const getProducts = (state, ownProps) => {
 	return products
 }
 
+export const getPurchases = (state, ownProps) => {
+	const purchases = R.map(id => getProductById(state, id.id))
+		(state.authorization.products)
+	return purchases
+}
+
 export const getTotalBasketCount = state => R.length(state.basket)
 
 export const getTotalBasketPrice = state => {
