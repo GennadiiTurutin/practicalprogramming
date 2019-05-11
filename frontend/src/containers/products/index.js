@@ -100,14 +100,15 @@ class Products extends Component {
   }
 
   render () {
-    const {products} = this.props;
+    const { user } = this.props;
+    const { products } = this.props;
     const isEmpty = R.isEmpty(products)
     return (
       <div className='col-sm-12 col-lg-12 col-md-12 my-5'>
         <Header />
         <div className="row">
           <div className="col-lg-4">
-            <Sidebar />
+            <Sidebar authenticated={ user.authenticated } />
           </div>
           <div className="col-lg-8">
             {isEmpty && 
