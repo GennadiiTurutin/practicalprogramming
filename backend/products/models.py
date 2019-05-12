@@ -10,7 +10,7 @@ class Product(models.Model):
     slug            = models.SlugField(unique=True, editable=False) 
     price           = models.DecimalField(decimal_places=2, max_digits=20, default=39.99)
     timestamp       = models.DateTimeField(auto_now_add=True)
-    likes           = models.ManyToManyField('profiles.Profile', related_name='users')
+    likes           = models.ManyToManyField('profiles.Profile', related_name='users', null=True, blank=True)
 
     def __str__(self):
         return self.title

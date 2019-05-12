@@ -31,6 +31,10 @@ import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAILURE,
 
+  LIKE_PRODUCT_START,
+  LIKE_PRODUCT_SUCCESS,
+  LIKE_PRODUCT_FAILURE,
+
   ADD_PRODUCT_TO_BASKET,
   DELETE_PRODUCT,
   CLEAN_BASKET,
@@ -44,6 +48,7 @@ import {
   fetchCategories as fetchCategoriesApi,
   login as loginUserApi,
   register as registerUserApi,
+  like as likeApi
 } from '../api'
 
 import axios from "axios";
@@ -187,7 +192,7 @@ export const register = ( username, email, password ) => async dispatch => {
     const user = await registerUserApi(username, email, password)
     dispatch({
       type: REGISTER_USER_SUCCESS,
-      payload: user
+      payload: user.data
     })
   } catch (err) {
     dispatch({
@@ -201,7 +206,7 @@ export const register = ( username, email, password ) => async dispatch => {
 export const logout = () => (dispatch, getState) => {
   dispatch({type: LOGOUT_USER_START})
   try {
-    axios.post("/auth/logout", null, tokenConfig(getState))
+    axios.post("http://127.0.0.1:8000/auth/logout", null, tokenConfig(getState))
     dispatch({
       type: LOGOUT_USER_SUCCESS,
     })
@@ -225,4 +230,21 @@ const tokenConfig = getState => {
     config.headers["Authorization"] = `Token ${token}`;
   }
   return config;
+}
+
+
+export const like = ( product ) => async dispatch => {
+  dispatch({type: LIKE_PRODUCT_START})
+  try {
+    await likeApi(product)
+    dispatch({
+      type: LIKE_PRODUCT_SUCCESS,
+    })
+  } catch (err) {
+    dispatch({
+      type: LIKE_PRODUCT_FAILURE,
+      payload: err,
+      error: true
+    })
+  }
 }

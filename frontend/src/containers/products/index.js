@@ -16,12 +16,13 @@ import {
   addProductToBasket,
   fetchCategories,
   deleteProduct,
+  like
 } from '../../actions'
 
 import { 
   getProducts, 
   getActiveUser,
-  getBasketProductsWithCount
+  getBasketProductsWithCount,
 } from '../../selectors'
 
 class Products extends Component {
@@ -53,6 +54,10 @@ class Products extends Component {
     }
   }
 
+  handleLike = (product) => {
+    console.log(product)
+    this.props.like(product);
+  }
 
   componentDidMount () {
     this.props.fetchProducts()
@@ -63,7 +68,9 @@ class Products extends Component {
     const shortDescription = `${R.take(100, product.description)}...`
     const { user } = this.props;
     const productBought = this.handleProducts(product);
-    
+    const likes = R.length(product.likes)
+    const liked = R.contains( user.id, product.likes)
+
     return (
         <div className="col-lg-12 my-4" key={index}>
           <div className="text-left text-grey">
@@ -88,11 +95,14 @@ class Products extends Component {
               />
               <FormControlLabel
                 disabled={!user.authenticated}
+                label={`${likes} likes`}
+                checked={liked}
                 control={
                   <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} 
-                  onClick={() => { console.log('Like') }} />
+                  onClick={() => { this.handleLike(product) }} />
                 }
               />
+
             </div>
           </div>
         </div>
@@ -139,6 +149,7 @@ const mapDispatchToProps = {
   addProductToBasket,
   fetchCategories,
   deleteProduct,
+  like
 }
 
 

@@ -2,14 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import * as R from 'ramda';
-import Sidebar from '../../components/sidebar';
-import Header from '../../components/header';
-import ShoppingCart from '@material-ui/icons/ShoppingCart';
-import CheckIcon from '@material-ui/icons/Check';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Favorite from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
 import {
   fetchProducts,

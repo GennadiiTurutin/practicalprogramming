@@ -3,8 +3,6 @@ import BasketInfo from '../../components/basketInfo'
 import Search from '../../components/search'
 import Categories from '../../components/categories'
 import Basket from '../../containers/basket'
-import PropTypes from 'prop-types';
-import {Link, withRouter} from 'react-router-dom'
 
 const Sidebar = (props) => {
 

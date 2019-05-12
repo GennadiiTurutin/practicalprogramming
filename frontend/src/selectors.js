@@ -48,8 +48,9 @@ export const getProducts = (state, ownProps) => {
 }
 
 export const getPurchases = (state, ownProps) => {
-	const purchases = R.map(id => getProductById(state, id.id))
-		(state.authorization.products)
+	const purchases = R.map(
+		id => getProductById(state, id.id)
+		)(state.authorization.products)
 	return purchases
 }
 

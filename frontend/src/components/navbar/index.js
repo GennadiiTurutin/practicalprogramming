@@ -9,7 +9,6 @@ import Basket from '../../containers/basket'
 
 import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
-import DoneIcon from '@material-ui/icons/Done';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -43,12 +42,6 @@ class Navigation extends Component {
 
   render () {
       const { classes } = this.props;
-      const link = (this.props.authenticated === false) ? `/` : `/cabinet`;
-      const SelectClassroom = props => <Link to={link} {...props} 
-            style={{ 
-              textDecoration: 'none', 
-              color: "white",
-            }}/>
 
       const authLinks = (
         <Nav className="ml-auto my-2">
@@ -79,30 +72,23 @@ class Navigation extends Component {
       );
 
       const authClassroom = (
-        <Nav className="ml-auto my-2">
           <Chip
             icon={<FaceIcon />}
             label="My classroom"
             clickable
             className={classes.chip}
             color="primary"
-            component={SelectClassroom}
-            deleteIcon={<DoneIcon />}
           />
-        </Nav>
         )
 
       const guestClassroom = (
-        <Nav className="ml-auto my-2">
           <Chip
               icon={<FaceIcon />}
-              label={'My classroom'}
+              label="My classroom"
               clickable={false}
               className={classes.chip}
               color="secondary"
-              component={SelectClassroom}
           />
-        </Nav>
         )
 
       return (
@@ -115,8 +101,13 @@ class Navigation extends Component {
             </Navbar.Brand>
             {this.props.user.authenticated ? authLinks : guestLinks}
           </Navbar>
-          <Navbar expand="lg">
-            {this.props.user.authenticated ? authClassroom : guestClassroom}
+          <Navbar expand="sm">
+            <Nav className="ml-auto my-2">
+              <Link to={`/cabinet`} 
+                    style={{ textDecoration: 'none', color: "white"}}>
+                {this.props.user.authenticated ? authClassroom : guestClassroom}
+              </Link>
+            </Nav>
           </Navbar>
         </React.Fragment>
       )

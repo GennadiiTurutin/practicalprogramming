@@ -5,7 +5,6 @@ import {
   FETCH_PRODUCT_BY_ID_SUCCESS
 } from '../actionTypes'
 
-
 const initialState = {}
 
 export default (state = initialState, {type, payload}) => {

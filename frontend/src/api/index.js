@@ -70,4 +70,17 @@ export const register = async ( username, email, password ) => {
   })
 };
 
+export const like = async ( product ) => {
+  return new Promise(resolve => {
+    console.log('Function like: ', product)
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    const body = JSON.stringify({ product });
+    const response = axios.put(`http://127.0.0.1:8000/products/${product.id}/`, product, config)
+    resolve(response)
+  })
+};
 
