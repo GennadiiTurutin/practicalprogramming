@@ -233,12 +233,13 @@ const tokenConfig = getState => {
 }
 
 
-export const like = ( product ) => async dispatch => {
+export const like = ( products, index ) => async dispatch => {
   dispatch({type: LIKE_PRODUCT_START})
   try {
-    await likeApi(product)
+    products = await likeApi(products, index)
     dispatch({
       type: LIKE_PRODUCT_SUCCESS,
+      payload: products
     })
   } catch (err) {
     dispatch({
@@ -248,3 +249,4 @@ export const like = ( product ) => async dispatch => {
     })
   }
 }
+

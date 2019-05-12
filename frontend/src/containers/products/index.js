@@ -54,9 +54,13 @@ class Products extends Component {
     }
   }
 
-  handleLike = (product) => {
-    console.log(product)
-    this.props.like(product);
+  handleLike = (products, index, liked) => {
+    if (liked) { 
+      products[Object.keys(products)[index]].likes = products[Object.keys(products)[index]].likes.filter(e => e !== this.props.user.id)
+    } else {
+      products[Object.keys(products)[index]].likes.push(this.props.user.id)
+    }
+    this.props.like(products, index);
   }
 
   componentDidMount () {
@@ -99,7 +103,7 @@ class Products extends Component {
                 checked={liked}
                 control={
                   <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} 
-                  onClick={() => { this.handleLike(product) }} />
+                  onClick={() => { this.handleLike(this.props.products, index, liked) }} />
                 }
               />
 

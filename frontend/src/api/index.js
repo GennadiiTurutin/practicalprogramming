@@ -70,15 +70,15 @@ export const register = async ( username, email, password ) => {
   })
 };
 
-export const like = async ( product ) => {
+export const like = async ( products, index ) => {
+
   return new Promise(resolve => {
-    console.log('Function like: ', product)
+    const product = products[Object.keys(products)[index]]
     const config = {
       headers: {
         "Content-Type": "application/json"
       }
     };
-    const body = JSON.stringify({ product });
     const response = axios.put(`http://127.0.0.1:8000/products/${product.id}/`, product, config)
     resolve(response)
   })
