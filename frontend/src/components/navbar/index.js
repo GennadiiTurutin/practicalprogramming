@@ -56,7 +56,6 @@ class Navigation extends Component {
                   <MenuItem onClick={popupState.close}>Profile</MenuItem>
                   <MenuItem onClick={this.onLogout}>Logout</MenuItem>
                 </Menu>
-                <Basket />
               </React.Fragment>
             )}
           </PopupState>
@@ -67,7 +66,6 @@ class Navigation extends Component {
         <Nav className="ml-auto my-2">
           <LoginDialog /> 
           <RegisterDialog /> 
-          <Basket />
         </Nav>
       );
 
@@ -90,6 +88,7 @@ class Navigation extends Component {
               color="secondary"
           />
         )
+      const link = (this.props.user.authenticated === true) ? `/classroom` : `/`;
 
       return (
         <React.Fragment>
@@ -102,8 +101,13 @@ class Navigation extends Component {
             {this.props.user.authenticated ? authLinks : guestLinks}
           </Navbar>
           <Navbar expand="sm">
-            <Nav className="ml-auto my-2">
-              <Link to={`/cabinet`} 
+            <Nav className="ml-auto">
+              <Basket />
+            </Nav>
+          </Navbar>
+          <Navbar expand="sm">
+            <Nav className="ml-auto">
+              <Link to={link}
                     style={{ textDecoration: 'none', color: "white"}}>
                 {this.props.user.authenticated ? authClassroom : guestClassroom}
               </Link>

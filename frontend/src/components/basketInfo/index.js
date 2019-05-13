@@ -8,9 +8,9 @@ import {
 
 const BasketInfo = ({totalBasketCount, totalPrice}) => (
     <div className='container my-4'>
-        <h2 className="text-grey">Shopping Cart</h2>
-        <p className="text-grey text-left my-4">You have {totalBasketCount} items in your cart</p> 
-        <p className="text-grey text-left my-4">Total price: ${totalPrice}</p>
+        <h5 className="text-grey">SHOPPING CART</h5>
+        <h6 className="text-grey text-left my-4">You have {totalBasketCount} items in your cart</h6> 
+        <h6 className="text-grey text-left my-4">Total price: ${totalPrice}</h6>
     </div>
 )
 

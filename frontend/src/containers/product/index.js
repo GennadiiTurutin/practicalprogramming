@@ -5,8 +5,6 @@ import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import CheckIcon from '@material-ui/icons/Check';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Favorite from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
 import {
   fetchProductBySlug, 
@@ -72,13 +70,6 @@ class Product extends Component {
               icon={<ShoppingCart />} 
               checkedIcon={<CheckIcon />} 
               onClick={() => { this.handleClick(product) }} />
-            }
-          />
-          <FormControlLabel
-            disabled={!user.authenticated}
-            control={
-              <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} 
-              onClick={() => { console.log('Like') }} />
             }
           />
 

@@ -91,12 +91,13 @@ class Basket extends React.Component {
 
     return ( 
         <React.Fragment>
-
+          <div className="text-center">
           <IconButton aria-label="Cart" color="primary" className="text-grey" onClick={this.handleClickOpen}>
-            <Badge badgeContent={this.props.totalBasketCount} color="primary" classes={{ badge: classes.badge }}>
+            <Badge badgeContent={this.props.totalBasketCount} color="secondary" classes={{ badge: classes.badge }}>
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
+          </div>
 
           <Dialog
             fullWidth={this.state.fullWidth}

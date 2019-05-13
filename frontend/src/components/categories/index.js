@@ -10,20 +10,15 @@ import * as R from 'ramda';
 const Categories = ({categories, activeCategoryId}) => {
   
   const renderCategory = (category, index) => {
-
     const categoryActive = R.equals(category.id, Number(activeCategoryId));
-
     const link = (categoryActive === true) ? `/` : `/categories/${category.id}`;
-
     const SelectCategory = props => <Link to={link} {...props} /> 
 
   	return (
       <Button aria-label="Category" color="primary" component={SelectCategory} key={index}>
         <div className="container text-left text-grey">
           <h5>
-            <Checkbox
-              checked={categoryActive}
-            />
+            <Checkbox checked={categoryActive} />
             {category.title}
           </h5>
         </div>
@@ -32,7 +27,6 @@ const Categories = ({categories, activeCategoryId}) => {
   }
 
   const renderAllCategory = () => {
-
     const AllCategories = props => <Link to="/" {...props} />
   	return (
       <Button aria-label="Category" color="primary" component={AllCategories}>

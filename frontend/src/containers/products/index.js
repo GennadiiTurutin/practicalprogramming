@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import * as R from 'ramda';
 import Sidebar from '../../components/sidebar';
-import Header from '../../components/header';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import CheckIcon from '@material-ui/icons/Check';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -106,7 +105,6 @@ class Products extends Component {
                   onClick={() => { this.handleLike(this.props.products, index, liked) }} />
                 }
               />
-
             </div>
           </div>
         </div>
@@ -119,10 +117,9 @@ class Products extends Component {
     const isEmpty = R.isEmpty(products)
     return (
       <div className='col-sm-12 col-lg-12 col-md-12 my-5'>
-        <Header />
         <div className="row">
           <div className="col-lg-4">
-            <Sidebar authenticated={ user.authenticated } />
+            <Sidebar />
           </div>
           <div className="col-lg-8">
             {isEmpty && 

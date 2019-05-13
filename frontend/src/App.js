@@ -9,9 +9,9 @@ import Layout from './containers/layout'
 import Product from './containers/product'
 import Products from './containers/products'
 import Basket from './containers/basket'
-import Cabinet from './containers/cabinet'
+import Classroom from './containers/classroom'
 import Profile from './containers/profile'
-
+import Material from './containers/material'
 import reducers from './reducers'
 
 import './App.css';
@@ -33,7 +33,8 @@ class App extends Component {
                 <Route path='/products/:slug' component={Product} />
   		          <Route path='/basket' component={Basket} />
                 <Route path='/profile' component={Profile} />
-                <Route path='/cabinet' component={Cabinet} />
+                <Route path='/classroom' component={Classroom} />
+                <Route path='/classroom/:slug' component={Material} />
   		        </Switch>
   		      </Layout>
           </Router>

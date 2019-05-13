@@ -12,7 +12,7 @@ import {
   getPurchases
 } from '../../selectors'
 
-class Cabinet extends Component {
+class Classroom extends Component {
 
   componentDidMount () {
     this.props.fetchProducts()
@@ -25,7 +25,7 @@ class Cabinet extends Component {
         <div className="col-lg-12 my-4" key={index}>
           <div className="text-left text-grey">
             <h2 className="text-grey">
-              <Link to={`/products/${product.slug}`} style={{ textDecoration: 'none', color: "#B1B7BD" }}>
+              <Link to={`/classroom/${product.slug}`} style={{ textDecoration: 'none', color: "#B1B7BD" }}>
                 {product.title}
               </Link>
             </h2>
@@ -69,4 +69,4 @@ const mapDispatchToProps = {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cabinet)
+export default connect(mapStateToProps, mapDispatchToProps)(Classroom)
