@@ -14,7 +14,6 @@ class Material extends Component {
 
   renderProduct () {
     const { product } = this.props
-    const { user } = this.props;
 
     return (
       <div className="container my-4 text-grey"> 

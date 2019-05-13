@@ -112,7 +112,6 @@ class Products extends Component {
   }
 
   render () {
-    const { user } = this.props;
     const { products } = this.props;
     const isEmpty = R.isEmpty(products)
     return (
