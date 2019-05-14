@@ -2,6 +2,7 @@ import * as R from 'ramda';
 
 import {
 	LOGIN_USER_SUCCESS,
+	LOGIN_USER_FAILURE,
 	LOGOUT_USER_SUCCESS, 
 	REGISTER_USER_SUCCESS
 } from '../actionTypes'

@@ -22,7 +22,6 @@ class Material extends Component {
           <p>{product.description}</p>
           <h2>${product.price}</h2>
         </div>
-
       </div>
     )
   }

@@ -40,6 +40,7 @@ import {
   CLEAN_BASKET,
   SEARCH_PRODUCT
 } from '../actionTypes'
+import { toast } from "react-toastify";
 import {
   fetchProducts as fetchProductsApi,
   fetchProductById as fetchProductByIdApi,
@@ -67,6 +68,7 @@ export const fetchProducts = () => async dispatch => {
       payload: err,
       error: true
     })
+    toast.error("Server error. Try again later");
   }
 }
 
@@ -84,6 +86,7 @@ export const fetchCategories = () => async dispatch => {
       payload: err,
       error: true
     })
+    toast.error("Server error. Try again later");
   }
 }
 
@@ -101,6 +104,7 @@ export const fetchProductById = id => async dispatch => {
       payload: err,
       error: true
     })
+    toast.error("Server error. Try again later");
   }
 }
 
@@ -118,6 +122,7 @@ export const fetchProductBySlug = slug => async dispatch => {
       payload: err,
       error: true
     })
+    toast.error("Server error. Try again later");
   }
 }
 
@@ -135,6 +140,7 @@ export const fetchProfileById = id => async dispatch => {
       payload: err,
       error: true
     })
+    toast.error("Server error. Try again later");
   }
 }
 
@@ -143,6 +149,7 @@ export const deleteProduct = id => dispatch => {
     type: DELETE_PRODUCT,
     payload: id
   })
+  toast.info("The item has been deleted from the basket");
 }
 
 export const addProductToBasket = id => dispatch => {
@@ -150,6 +157,7 @@ export const addProductToBasket = id => dispatch => {
     type: ADD_PRODUCT_TO_BASKET,
     payload: id
   })
+  toast.info("The item has been added to the basket");
 }
 
 export const searchProduct = text => dispatch => {
@@ -163,10 +171,12 @@ export const cleanBasket = () => dispatch => {
   dispatch({
     type: CLEAN_BASKET
   })
+  toast.info("Basket has been cleaned");
 }
 
 export const basketCheckout = products => () => {
   alert(JSON.stringify(products))
+  toast.info("Successful checkout");
 }
 
 export const login = ( username, password ) => async dispatch => {
@@ -177,12 +187,14 @@ export const login = ( username, password ) => async dispatch => {
       type: LOGIN_USER_SUCCESS,
       payload: user.data
     })
+    toast.success("You've been successfully logged in");
   } catch (err) {
     dispatch({
       type: LOGIN_USER_FAILURE,
       payload: err,
       error: true
     })
+    toast.error("Authorization error");
   }
 }
 
@@ -194,12 +206,14 @@ export const register = ( username, email, password ) => async dispatch => {
       type: REGISTER_USER_SUCCESS,
       payload: user.data
     })
+    toast.success("You've been successfully registered");
   } catch (err) {
     dispatch({
       type: REGISTER_USER_FAILURE,
       payload: err,
       error: true
     })
+    toast.error("Registration error");
   }
 }
 
@@ -210,12 +224,14 @@ export const logout = () => (dispatch, getState) => {
     dispatch({
       type: LOGOUT_USER_SUCCESS,
     })
+    toast.success("You've been successfully logged out");
   } catch (err) {
     dispatch({
       type: LOGOUT_USER_FAILURE,
       payload: err,
       error: true
     })
+    toast.error("Sorry, try again later!");
   }
 }
 
@@ -247,6 +263,7 @@ export const like = ( products, index ) => async dispatch => {
       payload: err,
       error: true
     })
+    toast.error("Server error. Try again later");
   }
 }
 

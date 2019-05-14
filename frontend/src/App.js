@@ -23,23 +23,24 @@ const store = createStore(reducers, composeWithDevTools(
 class App extends Component {
  
   render() {
+
     return (
         <Provider store={store}>
-          <Router>
-            <Layout>
-              <Switch>
-                <Route path='/' exact component={Products} />
-                <Route path='/categories/:id' component={Products} />
-                <Route path='/products/:slug' component={Product} />
-  		          <Route path='/basket' component={Basket} />
-                <Route path='/profile' component={Profile} />
-                <Route path='/classroom' component={Classroom} />
-                <Route path='/classroom/:slug' component={Material} />
-  		        </Switch>
-  		      </Layout>
-          </Router>
+            <Router>
+                  <Layout>
+                    <Switch>
+                      <Route path='/' exact component={Products} />
+                      <Route path='/categories/:id' component={Products} />
+                      <Route path='/products/:slug' component={Product} />
+        		          <Route path='/basket' component={Basket} />
+                      <Route path='/profile' component={Profile} />
+                      <Route path='/classroom' component={Classroom} />
+                      <Route path='/material/:slug' component={Material} />
+        		        </Switch>
+  		            </Layout>
+            </Router>
         </Provider>
-    );
+    )
   }
 }
 

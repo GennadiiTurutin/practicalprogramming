@@ -25,7 +25,7 @@ class Classroom extends Component {
         <div className="col-lg-12 my-4" key={index}>
           <div className="text-left text-grey">
             <h2 className="text-grey">
-              <Link to={`/classroom/${product.slug}`} style={{ textDecoration: 'none', color: "#B1B7BD" }}>
+              <Link to={`/material/${product.slug}/`} style={{ textDecoration: 'none', color: "#B1B7BD" }}>
                 {product.title}
               </Link>
             </h2>
