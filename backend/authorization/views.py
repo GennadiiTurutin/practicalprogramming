@@ -18,7 +18,12 @@ class RegisterAPI(generics.GenericAPIView):
 
     user = serializer.save()
     return Response({
-      "user": UserSerializer(user, context=self.get_serializer_context()).data,
+      "id": UserSerializer(user, context=self.get_serializer_context()).data["id"],
+      "username": UserSerializer(user, context=self.get_serializer_context()).data["username"],
+      "email": UserSerializer(user, context=self.get_serializer_context()).data["email"],
+      "user": UserSerializer(user, context=self.get_serializer_context()).data["user"],
+      "products": user.user.products.values('id'),
+      "authenticated": True,
       "token": AuthToken.objects.create(user)[1]
     })
 
@@ -30,7 +35,7 @@ class LoginAPI(generics.GenericAPIView):
     serializer = self.get_serializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     user = serializer.validated_data
-    profile = Profile.objects.get(id=1)
+    #profile = Profile.objects.get(id=1)
 
     return Response({
       "id": UserSerializer(user, context=self.get_serializer_context()).data["id"],

@@ -27,7 +27,14 @@ export default (state = initialState, {type, payload}) => {
 	  	    authenticated: R.prop('authenticated', payload)
 		  })
 		case REGISTER_USER_SUCCESS:
-		  return R.append(payload, state)
+	  	  return R.merge(state, {
+	    	    id: R.prop('id', payload),
+	    	    username: R.prop('username', payload),
+	    	    email: R.prop('email', payload),
+	    	    products: R.prop('products', payload),
+	    	    token: R.prop('token', payload),
+	    	    authenticated: R.prop('authenticated', payload)
+	  	  })
 		case LOGOUT_USER_SUCCESS:
 		  return initialState
 		default:
