@@ -109,7 +109,7 @@ class LoginDialog extends React.Component {
     return (
       <React.Fragment>
         <Button aria-label="Login" color="primary" onClick={this.handleClickOpen} className={classes.button}>
-          Login
+          <h5>Login</h5>
         </Button>
         <Dialog
           fullWidth={this.state.fullWidth}

@@ -123,7 +123,7 @@ class RegisterDialog extends React.Component {
     return (
       <React.Fragment>
         <Button aria-label="Login" color="primary" onClick={this.handleClickOpen} className={classes.button}>
-          Register
+          <h5>Register</h5>
         </Button>
         <Dialog
           fullWidth={this.state.fullWidth}

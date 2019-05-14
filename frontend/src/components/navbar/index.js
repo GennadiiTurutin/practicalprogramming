@@ -42,30 +42,32 @@ class Navigation extends Component {
 
   render () {
       const { classes } = this.props;
+      const SelectCategory = props => <Link to='/profile' {...props} /> 
+       
 
       const authLinks = (
         <Nav className="ml-auto my-2">
-          <PopupState variant="popover" popupId="demo-popup-menu">
-            {popupState => (
-              <React.Fragment>
-                <Button aria-label="Cabinet" className="text-grey" color="primary" 
-                         {...bindTrigger(popupState)}>
-                  {this.props.user.username}
-                </Button>
-                <Menu {...bindMenu(popupState)}>
-                  <MenuItem onClick={popupState.close}>Profile</MenuItem>
-                  <MenuItem onClick={this.onLogout}>Logout</MenuItem>
-                </Menu>
-              </React.Fragment>
-            )}
-          </PopupState>
+        <div className="containter">
+          <Button aria-label="Profile" 
+                  component={SelectCategory}
+                  className="text-grey" color="primary" >
+            <h5>{this.props.user.username}</h5>
+          </Button>
+          <Button aria-label="Logout" 
+                  className="text-grey" color="primary"
+                  onClick={() => { this.onLogout() }} >
+           <h5> Logout</h5>
+          </Button>
+        </div>
         </Nav>
       );
 
       const guestLinks = (
-        <Nav className="ml-auto my-2">
+        <Nav className="ml-auto">
+          <div className="containter">
           <LoginDialog /> 
           <RegisterDialog /> 
+          </div>
         </Nav>
       );
 
@@ -95,13 +97,13 @@ class Navigation extends Component {
           <Navbar expand="lg">
             <Navbar.Brand className="text-grey">
               <Link to='/' style={{ textDecoration: 'none', color: "#B1B7BD" }}>
-              Practical Programming
+              <h1>Praktikum</h1>
               </Link>
             </Navbar.Brand>
             {this.props.user.authenticated ? authLinks : guestLinks}
           </Navbar>
           <Navbar expand="sm">
-            <Nav className="ml-auto">
+            <Nav className="ml-auto mx-5">
               <Basket />
             </Nav>
           </Navbar>
