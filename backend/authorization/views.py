@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
 from django.contrib.auth.models import User
-from profiles.models import Profile
+#from profiles.models import Profile
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):

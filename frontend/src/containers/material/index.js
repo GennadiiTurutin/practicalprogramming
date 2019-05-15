@@ -20,7 +20,7 @@ class Material extends Component {
         <div className='form-group'>
           <h1>{product.title}</h1>
           <p>{product.description}</p>
-          <h2>${product.price}</h2>
+          <p>{product.content}</p>
         </div>
       </div>
     )
@@ -30,14 +30,7 @@ class Material extends Component {
     const {product} = this.props
     return (
         <div className="col-sm-12 col-lg-12 col-md-12 my-5">
-            <div className="row">
-              <div className="col-lg-4">
-                <h2>Some navidation panel</h2>
-              </div>
-              <div className="col-lg-8">
                 {product && this.renderProduct()}
-              </div>
-            </div>
         </div>
     )
   }
