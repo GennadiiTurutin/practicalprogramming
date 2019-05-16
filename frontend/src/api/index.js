@@ -84,3 +84,15 @@ export const like = async ( products, index ) => {
   })
 };
 
+export const checkout = async ( purchase ) => {
+  return new Promise(resolve => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    const body = JSON.stringify({ purchase });
+    const response = axios.post("http://127.0.0.1:8000/checkout/", body, config)
+    resolve(response)
+  })
+};

@@ -20,7 +20,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import {Elements, StripeProvider} from 'react-stripe-elements';
-import CheckoutForm from '../checkout';
+import Checkout from '../checkout';
 
 import {
   getTotalBasketCount,
@@ -155,16 +155,7 @@ class Basket extends React.Component {
                                   ${this.props.totalPrice}
                                   </h4>
                               </div>
-                              <StripeProvider apiKey="pk_test_P4GDhrq8BnHwHHSFnxh29ZzG00Q7N0ZQ9J">
-                                <div className="text-left">
-                                  <h2 className="text-grey">Payment</h2>
-                                  <Elements>
-                                    <CheckoutForm />
-                                  </Elements>
-                                </div>
-                              </StripeProvider>
                             </div>
-
                           }
                         </div>
                       </div>
@@ -176,6 +167,7 @@ class Basket extends React.Component {
             <DialogActions>
             {!isBasketEmpty &&
               <div>
+              <Checkout />
               <Fab color="primary" 
                    onClick={this.handleCheckout} 
                    aria-label="Add" 

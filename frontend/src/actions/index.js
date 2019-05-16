@@ -35,6 +35,10 @@ import {
   LIKE_PRODUCT_SUCCESS,
   LIKE_PRODUCT_FAILURE,
 
+  CHECKOUT_START,
+  CHECKOUT_SUCCESS,
+  CHECKOUT_FAILURE,
+
   ADD_PRODUCT_TO_BASKET,
   DELETE_PRODUCT,
   CLEAN_BASKET,
@@ -49,7 +53,8 @@ import {
   fetchCategories as fetchCategoriesApi,
   login as loginUserApi,
   register as registerUserApi,
-  like as likeApi
+  like as likeApi,
+  checkout as checkoutApi
 } from '../api'
 
 import axios from "axios";
@@ -267,3 +272,20 @@ export const like = ( products, index ) => async dispatch => {
   }
 }
 
+export const checkout = ( purchase ) => async dispatch => {
+  dispatch({type: CHECKOUT_START})
+  try {
+    const user = await checkoutApi(purchase)
+    dispatch({
+      type: CHECKOUT_SUCCESS
+    })
+    toast.success("Your purchase is successful");
+  } catch (err) {
+    dispatch({
+      type: CHECKOUT_FAILURE,
+      payload: err,
+      error: true
+    })
+    toast.error("Purchase error");
+  }
+}

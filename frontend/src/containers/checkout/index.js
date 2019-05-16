@@ -1,34 +1,26 @@
-import React, {Component} from 'react';
-import {CardElement, injectStripe} from 'react-stripe-elements';
+import React from 'react'
+import StripeCheckout from 'react-stripe-checkout';
 
-class CheckoutForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {complete: false};
-    this.submit = this.submit.bind(this);
-  }
-
-  async submit(ev) {
-    let {token} = await this.props.stripe.createToken({name: "Name"});
-      let response = await fetch("/charge", {
-        method: "POST",
-        headers: {"Content-Type": "text/plain"},
-        body: token.id
-      });
-
-      if (response.ok) this.setState({complete: true});
-  }
+export default class Checkout extends React.Component {
+  onToken = (token, addresses) => {
+      // TODO: Send the token information and any other
+      // relevant information to your payment process
+      // server, wait for the response, and update the UI
+      // accordingly. How this is done is up to you. Using
+      // XHR, fetch, or a GraphQL mutation is typical.
+    };
 
   render() {
-    if (this.state.complete) return <h1>Purchase Complete</h1>;
-
     return (
-      <div className="checkout">
-        <CardElement />
-        <button onClick={this.submit}>Send</button>
-      </div>
-    );
+      <StripeCheckout
+        billingAddress
+        description="Payment"
+        locale="auto"
+        name="Praktikum.com"
+        stripeKey="pk_test_P4GDhrq8BnHwHHSFnxh29ZzG00Q7N0ZQ9J"
+        token={this.onToken}
+        zipCode
+      />
+    )
   }
 }
-
-export default injectStripe(CheckoutForm);
