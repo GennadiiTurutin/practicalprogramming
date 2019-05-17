@@ -275,7 +275,7 @@ export const like = ( products, index ) => async dispatch => {
 export const checkout = ( purchase ) => async dispatch => {
   dispatch({type: CHECKOUT_START})
   try {
-    const user = await checkoutApi(purchase)
+    await checkoutApi(purchase)
     dispatch({
       type: CHECKOUT_SUCCESS
     })

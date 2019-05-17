@@ -3,7 +3,8 @@ import * as R from 'ramda';
 import {
 	ADD_PRODUCT_TO_BASKET,
 	DELETE_PRODUCT, 
-	CLEAN_BASKET
+	CLEAN_BASKET,
+	CHECKOUT_SUCCESS
 } from '../actionTypes'
 
 const initialState = []
@@ -15,6 +16,8 @@ export default (state = initialState, {type, payload}) => {
 		case DELETE_PRODUCT:
 		  return R.without(R.of(payload), state)
 		case CLEAN_BASKET:
+		  return []
+		case CHECKOUT_SUCCESS:
 		  return []
 		default:
 			return state

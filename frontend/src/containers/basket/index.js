@@ -5,7 +5,7 @@ import { FaWindowClose } from 'react-icons/fa';
 import { Table } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { compose } from 'redux'
+import { compose } from 'redux';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -18,8 +18,6 @@ import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 import DeleteIcon from '@material-ui/icons/Delete';
-
-import {Elements, StripeProvider} from 'react-stripe-elements';
 import Checkout from '../checkout';
 
 import {

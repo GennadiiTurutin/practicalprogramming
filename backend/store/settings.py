@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'products',
     'categories',
     'stripe',
+    'payments',
 
 
     'allauth',

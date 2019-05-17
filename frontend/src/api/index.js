@@ -84,15 +84,20 @@ export const like = async ( products, index ) => {
   })
 };
 
-export const checkout = async ( purchase ) => {
+export const checkout = async ( profile ) => {
+
   return new Promise(resolve => {
     const config = {
       headers: {
         "Content-Type": "application/json"
       }
     };
-    const body = JSON.stringify({ purchase });
-    const response = axios.post("http://127.0.0.1:8000/checkout/", body, config)
+    const id = 2
+    const user = profile.id 
+    const products = profile.products.map(x => x.id);
+    const body = JSON.stringify({id, user, products});
+    console.log(body)
+    const response = axios.put(`http://127.0.0.1:8000/profiles/${id}/`, body, config)
     resolve(response)
   })
 };

@@ -11,9 +11,6 @@ import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state/index';
 import { logout } from "../../actions";
 import { compose } from 'redux'
 import { withStyles } from '@material-ui/core/styles';

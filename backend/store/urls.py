@@ -23,5 +23,6 @@ urlpatterns = [
     path('auth', include('knox.urls')),
     path('auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('admin/', admin.site.urls),
+    
 ]
 
