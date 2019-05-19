@@ -71,7 +71,6 @@ export const register = async ( username, email, password ) => {
 };
 
 export const like = async ( products, index ) => {
-
   return new Promise(resolve => {
     const product = products[Object.keys(products)[index]]
     const config = {
@@ -85,7 +84,6 @@ export const like = async ( products, index ) => {
 };
 
 export const checkout = async ( profile ) => {
-
   return new Promise(resolve => {
     const config = {
       headers: {

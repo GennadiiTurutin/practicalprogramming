@@ -145,7 +145,7 @@ export const fetchProfileById = id => async dispatch => {
       payload: err,
       error: true
     })
-    toast.error("Server error. Try again later");
+    toast.error("Server error. Check your connection");
   }
 }
 

@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import TextField from '@material-ui/core/TextField';
+import red from '@material-ui/core/colors/red';
+import blue from '@material-ui/core/colors/blue';
 
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
@@ -61,6 +63,16 @@ const styles = theme => ({
   extendedIcon: {
     marginRight: theme.spacing.unit,
   },
+
+  icon: {
+    margin: theme.spacing.unit * 2,
+  },
+  iconHover: {
+    margin: theme.spacing.unit * 2,
+    '&:hover': {
+      color: red[800],
+    },
+  },
 });
 
 
@@ -111,6 +123,7 @@ class LoginDialog extends React.Component {
         <Button aria-label="Login" color="primary" onClick={this.handleClickOpen} className={classes.button}>
           <h5>Login</h5>
         </Button>
+        
         <Dialog
           fullWidth={this.state.fullWidth}
           maxWidth={this.state.maxWidth}
@@ -149,23 +162,21 @@ class LoginDialog extends React.Component {
                     }}
                   />
               </form>
-            </div>
           <DialogActions>
-            <Fab color="primary" 
-                 type="button"
-                 aria-label="Add" 
-                 onClick={this.onSubmit}
-                 className={classes.fab}>
-              <DoneIcon />
-            </Fab>
-            <Fab color="secondary" 
-                 onClick={this.handleClose} 
-                 aria-label="Close" 
-                 className={classes.fab}>
-              <CloseIcon />
-            </Fab>
+            <DoneIcon 
+              className={classes.iconHover} 
+              onClick={this.onSubmit} 
+              aria-label="Done"
+            />
+            <CloseIcon 
+              className={classes.iconHover} 
+              onClick={this.handleClose} 
+              aria-label="Close"
+            />
           </DialogActions>
+          </div>
         </Dialog>
+
       </React.Fragment>
     );
   }

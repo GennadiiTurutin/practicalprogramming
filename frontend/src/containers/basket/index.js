@@ -10,6 +10,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
+import red from '@material-ui/core/colors/red';
+import blue from '@material-ui/core/colors/blue';
 
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
@@ -55,11 +57,27 @@ const styles = theme => ({
       theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
     }`,
   },
+
   fab: {
     margin: theme.spacing.unit,
   },
   extendedIcon: {
     marginRight: theme.spacing.unit,
+  },
+
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  icon: {
+    margin: theme.spacing.unit * 2,
+  },
+  iconHover: {
+    margin: theme.spacing.unit * 2,
+    '&:hover': {
+      color: red[800],
+    },
   },
 });
 
@@ -160,32 +178,23 @@ class Basket extends React.Component {
                     </div>
                   </div>
                 </div>
-        
             </DialogContent>
             <DialogActions>
+            {!isBasketEmpty && <Checkout />}
             {!isBasketEmpty &&
               <div>
-              <Checkout />
-              <Fab color="primary" 
-                   onClick={this.handleCheckout} 
-                   aria-label="Add" 
-                   className={classes.fab}>
-                <DoneIcon />
-              </Fab>
-              <Fab color="secondary" 
-                   onClick={this.handleDelete} 
-                   aria-label="Delete" 
-                   className={classes.fab}>
-                <DeleteIcon />
-              </Fab>
+              <DeleteIcon 
+                className={classes.iconHover} 
+                onClick={this.handleDelete} 
+                aria-label="Delete"
+              />
               </div>
-            }
-              <Fab color="secondary" 
-                   onClick={this.handleClose} 
-                   aria-label="Close" 
-                   className={classes.fab}>
-                <CloseIcon />
-              </Fab>
+            } 
+              <CloseIcon 
+                className={classes.iconHover} 
+                onClick={this.handleClose} 
+                aria-label="Close"
+              />
             </DialogActions>
           </Dialog>
         </React.Fragment>
