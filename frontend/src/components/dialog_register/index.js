@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux'
-import { compose } from 'redux'
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { register } from "../../actions";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
 import { Redirect } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import red from '@material-ui/core/colors/red';
-import blue from '@material-ui/core/colors/blue';
-
-import TextField from '@material-ui/core/TextField';
-
-import Fab from '@material-ui/core/Fab';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 
@@ -25,21 +20,6 @@ const styles = theme => ({
     margin: 'auto',
     width: 'fit-content',
   },
-  formControl: {
-    marginTop: theme.spacing.unit * 2,
-    minWidth: 120,
-  },
-  formControlLabel: {
-    marginTop: theme.spacing.unit,
-  },
-  badge: {
-    top: '50%',
-    right: -3,
-    // The border color match the background color.
-    border: `2px solid ${
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
-    }`,
-  },
   button: {
     margin: theme.spacing.unit,
     color: '#B1B7BD',
@@ -48,24 +28,8 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
   dense: {
     marginTop: 16,
-  },
-  menu: {
-    width: 200,
-  },
-  fab: {
-    margin: theme.spacing.unit,
-  },
-  extendedIcon: {
-    marginRight: theme.spacing.unit,
-  },
-  icon: {
-    margin: theme.spacing.unit * 2,
   },
   iconHover: {
     margin: theme.spacing.unit * 2,
@@ -83,6 +47,7 @@ class RegisterDialog extends React.Component {
     username: "",
     email: "",
     password: "",
+    repeatPassword: "",
     showPassword: false,
   };
 
@@ -90,6 +55,7 @@ class RegisterDialog extends React.Component {
     register: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool
   };
+
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -108,7 +74,7 @@ class RegisterDialog extends React.Component {
   }
 
   handleConfirmationChange = e => {
-     this.setState({confirmation: e.target.value});
+     this.setState({repeatPassword: e.target.value});
   }
 
   handleClose = () => {
@@ -124,9 +90,17 @@ class RegisterDialog extends React.Component {
     this.setState(state => ({ showPassword: !state.showPassword }));
   };
 
+  componentDidMount() {
+      ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+          if (value !== this.state.password) {
+              return false;
+          }
+          return true;
+      });
+  }
+
   render() {
     const { classes } = this.props;
-
     if (this.props.isAuthenticated) {
       return <Redirect to='/' />;
     }
@@ -144,36 +118,41 @@ class RegisterDialog extends React.Component {
           aria-labelledby="dialog">
           <DialogTitle id="dialog">Register</DialogTitle>
             <div className="container">
-              <form className={classes.container} 
-                    noValidate 
+              <ValidatorForm className={classes.container} 
+                    ref="form"
+                    onSubmit={this.onSubmit}
                     autoComplete="off">
-                    <TextField
+                    <TextValidator
                       id="username"
                       label="Username"
                       style={{ margin: 8 }}
                       placeholder="Preferred username"
                       margin="normal"
-                      value={this.state.username || ''}
+                      value={this.state.username}
                       onChange={this.handleUsernameChange}
                       variant="outlined"
+                      validators={['required']}
+                      errorMessages={['this field is required']}
                       InputLabelProps={{
                         shrink: true,
                       }}
                     />
-                    <TextField
+                    <TextValidator
                       id="email"
                       label="Email"
                       style={{ margin: 8 }}
                       fullWidth
                       margin="normal"
-                      value={this.state.email || ''}
+                      value={this.state.email}
                       onChange={this.handleEmailChange}
                       variant="outlined"
+                      validators={['required', 'isEmail']}
+                      errorMessages={['this field is required', 'email is not valid']}
                       InputLabelProps={{
                         shrink: true,
                       }}
                     />
-                    <TextField
+                    <TextValidator
                       id="password"
                       label="Password"
                       style={{ margin: 8 }}
@@ -181,7 +160,9 @@ class RegisterDialog extends React.Component {
                       margin="normal"
                       variant="outlined"
                       type="password"
-                      value={this.state.password || ''}
+                      validators={['required']}
+                      errorMessages={['this field is required']}
+                      value={this.state.password }
                       onChange={this.handlePasswordChange}
                       autoComplete="current-password"
                       helperText="Your password might include anything"
@@ -189,7 +170,7 @@ class RegisterDialog extends React.Component {
                         shrink: true,
                       }}
                     />
-                    <TextField
+                    <TextValidator
                       id="confirmation"
                       label="Confirmation"
                       style={{ margin: 8 }}
@@ -197,28 +178,29 @@ class RegisterDialog extends React.Component {
                       fullWidth
                       margin="normal"
                       variant="outlined"
-                      value={this.state.confirmation || ''}
+                      value={this.state.repeatPassword}
                       onChange={this.handleConfirmationChange}
                       type="password"
                       autoComplete="current-password"
+                      validators={['isPasswordMatch', 'required']}
+                      errorMessages={['password mismatch', 'this field is required']}
                       InputLabelProps={{
                         shrink: true,
                       }}
                     />
-              </form>
-            </div>
-          <DialogActions>
-            <DoneIcon 
-              className={classes.iconHover} 
-              onClick={this.onSubmit} 
-              aria-label="Done"
-            />
-            <CloseIcon 
-              className={classes.iconHover} 
-              onClick={this.handleClose} 
-              aria-label="Close"
-            />
-          </DialogActions>
+              <button style={{ padding: 0, border: 'none', background: 'none'}}>
+                  <DoneIcon 
+                    className={classes.iconHover} 
+                    aria-label="Done"
+                  />
+              </button>
+              <CloseIcon 
+                className={classes.iconHover} 
+                onClick={this.handleClose} 
+                aria-label="Close"
+              />
+          </ValidatorForm>
+          </div>
         </Dialog>
       </React.Fragment>
     );

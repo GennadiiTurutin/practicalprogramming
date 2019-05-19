@@ -2,11 +2,29 @@ import React from 'react'
 import StripeCheckout from 'react-stripe-checkout';
 import { checkout } from "../../actions";
 import {connect} from 'react-redux';
+import { compose } from 'redux';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import red from '@material-ui/core/colors/red';
 
 import { 
   getActiveUser,
   getBasketProductsWithCount
 } from '../../selectors'
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  iconHover: {
+    margin: theme.spacing.unit * 2,
+    '&:hover': {
+      color: red[800],
+    },
+  },
+});
 
 class Checkout extends React.Component {
   onToken = (token, addresses) => {
@@ -17,6 +35,8 @@ class Checkout extends React.Component {
     };
 
   render() {
+    const { classes } = this.props;
+
     return (
       <StripeCheckout
         billingAddress
@@ -26,10 +46,15 @@ class Checkout extends React.Component {
         stripeKey="pk_test_P4GDhrq8BnHwHHSFnxh29ZzG00Q7N0ZQ9J"
         token={this.onToken}
         zipCode
+        className={classes.iconHover} 
       />
     )
   }
 }
+
+Checkout.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 const mapDispatchToProps = {
   checkout
@@ -42,4 +67,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Checkout)
+export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(Checkout)

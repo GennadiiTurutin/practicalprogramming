@@ -179,11 +179,6 @@ export const cleanBasket = () => dispatch => {
   toast.info("Basket has been cleaned");
 }
 
-export const basketCheckout = products => () => {
-  alert(JSON.stringify(products))
-  toast.info("Successful checkout");
-}
-
 export const login = ( username, password ) => async dispatch => {
   dispatch({type: LOGIN_USER_START})
   try {

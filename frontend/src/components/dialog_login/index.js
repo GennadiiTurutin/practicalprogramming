@@ -3,15 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import TextField from '@material-ui/core/TextField';
 import red from '@material-ui/core/colors/red';
-import blue from '@material-ui/core/colors/blue';
-
-import Fab from '@material-ui/core/Fab';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 import { login } from "../../actions";
@@ -24,21 +20,6 @@ const styles = theme => ({
     margin: 'auto',
     width: 'fit-content',
   },
-  formControl: {
-    marginTop: theme.spacing.unit * 2,
-    minWidth: 120,
-  },
-  formControlLabel: {
-    marginTop: theme.spacing.unit,
-  },
-  badge: {
-    top: '50%',
-    right: -3,
-    // The border color match the background color.
-    border: `2px solid ${
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
-    }`,
-  },
   button: {
     margin: theme.spacing.unit,
     color: '#B1B7BD',
@@ -47,25 +28,8 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
   dense: {
     marginTop: 16,
-  },
-  menu: {
-    width: 200,
-  },
-  fab: {
-    margin: theme.spacing.unit,
-  },
-  extendedIcon: {
-    marginRight: theme.spacing.unit,
-  },
-
-  icon: {
-    margin: theme.spacing.unit * 2,
   },
   iconHover: {
     margin: theme.spacing.unit * 2,
@@ -132,51 +96,57 @@ class LoginDialog extends React.Component {
           aria-labelledby="dialog">
           <DialogTitle id="dialog">Login</DialogTitle>
             <div className="container">
-              <form className={classes.container}>
-                  <TextField
+              <ValidatorForm className={classes.container} 
+                    ref="form"
+                    onSubmit={this.onSubmit}
+                    autoComplete="off">
+                  <TextValidator
                     id="username"
                     label="Username"
                     style={{ margin: 8 }}
-                    fullWidth
+                    placeholder="Preferred username"
+                    margin="normal"
                     value={this.state.username || ''}
                     onChange={this.handleUsernameChange}
-                    margin="normal"
                     variant="outlined"
+                    validators={['required']}
+                    errorMessages={['this field is required']}
                     InputLabelProps={{
                       shrink: true,
                     }}
                   />
-                  <TextField
+                  <TextValidator
                     id="password"
                     label="Password"
                     style={{ margin: 8 }}
                     fullWidth
-                    value={this.state.password || ''}
-                    onChange={this.handlePasswordChange}
                     margin="normal"
                     variant="outlined"
                     type="password"
+                    validators={['required']}
+                    errorMessages={['this field is required']}
+                    value={this.state.password || '' }
+                    onChange={this.handlePasswordChange}
                     autoComplete="current-password"
+                    helperText="Your password might include anything"
                     InputLabelProps={{
                       shrink: true,
                     }}
                   />
-              </form>
-          <DialogActions>
-            <DoneIcon 
-              className={classes.iconHover} 
-              onClick={this.onSubmit} 
-              aria-label="Done"
-            />
+            <button style={{ padding: 0, border: 'none', background: 'none'}}>
+              <DoneIcon 
+                className={classes.iconHover} 
+                aria-label="Done"
+              />
+            </button>
             <CloseIcon 
               className={classes.iconHover} 
               onClick={this.handleClose} 
               aria-label="Close"
             />
-          </DialogActions>
+          </ValidatorForm>
           </div>
         </Dialog>
-
       </React.Fragment>
     );
   }

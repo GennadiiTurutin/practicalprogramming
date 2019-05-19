@@ -100,11 +100,6 @@ class Navigation extends Component {
             {this.props.user.authenticated ? authLinks : guestLinks}
           </Navbar>
           <Navbar expand="sm">
-            <Nav className="ml-auto mx-5">
-              <Basket />
-            </Nav>
-          </Navbar>
-          <Navbar expand="sm">
             <Nav className="ml-auto">
               <Link to={link}
                     style={{ textDecoration: 'none', color: "white"}}>

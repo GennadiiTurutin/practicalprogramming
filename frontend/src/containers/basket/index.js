@@ -11,67 +11,31 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import red from '@material-ui/core/colors/red';
-import blue from '@material-ui/core/colors/blue';
-
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
-import DoneIcon from '@material-ui/icons/Done';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Checkout from '../checkout';
 
 import {
   getTotalBasketCount,
   getTotalBasketPrice,
+  getActiveUser,
   getBasketProductsWithCount
 } from '../../selectors'
 
 import {
   deleteProduct,
-  cleanBasket, 
-  basketCheckout
+  cleanBasket 
 } from '../../actions'
 
 
 const styles = theme => ({
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: 'auto',
-    width: 'fit-content',
-  },
-  formControl: {
-    marginTop: theme.spacing.unit * 2,
-    minWidth: 120,
-  },
-  formControlLabel: {
-    marginTop: theme.spacing.unit,
-  },
-  badge: {
-    top: '50%',
-    right: -3,
-    // The border color match the background color.
-    border: `2px solid ${
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[900]
-    }`,
-  },
-
-  fab: {
-    margin: theme.spacing.unit,
-  },
-  extendedIcon: {
-    marginRight: theme.spacing.unit,
-  },
-
   root: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-end',
-  },
-  icon: {
-    margin: theme.spacing.unit * 2,
   },
   iconHover: {
     margin: theme.spacing.unit * 2,
@@ -85,7 +49,7 @@ class Basket extends React.Component {
   state = {
     open: false,
     fullWidth: true,
-    maxWidth: 'md'
+    maxWidth: 'sm'
   };
 
   handleClickOpen = () => {
@@ -96,24 +60,22 @@ class Basket extends React.Component {
     this.setState({ open: false });
   };
 
-  handleCheckout = () => {
-    this.props.basketCheckout(this.props.products);
-  };
-
   handleDelete = () => {
     this.props.cleanBasket();
   };
 
   render() {
     const { classes } = this.props;
+    const { user } = this.props;
     const isBasketEmpty = R.isEmpty(this.props.products)
+    const basketColor = (user.authenticated === false) ? "disabled" :"default"
 
     return ( 
         <React.Fragment>
           <div className="text-center">
-          <IconButton aria-label="Cart" color="primary" className="text-grey" onClick={this.handleClickOpen}>
+          <IconButton aria-label="Cart" color="primary" className="text-grey" disabled={!user.authenticated} onClick={this.handleClickOpen}>
             <Badge badgeContent={this.props.totalBasketCount} color="secondary" classes={{ badge: classes.badge }}>
-              <ShoppingCartIcon />
+              <ShoppingCartIcon color={basketColor} />
             </Badge>
           </IconButton>
           </div>
@@ -180,9 +142,9 @@ class Basket extends React.Component {
                 </div>
             </DialogContent>
             <DialogActions>
-            {!isBasketEmpty && <Checkout />}
             {!isBasketEmpty &&
               <div>
+              <Checkout /> 
               <DeleteIcon 
                 className={classes.iconHover} 
                 onClick={this.handleDelete} 
@@ -211,14 +173,14 @@ const mapStateToProps = state => {
   return {
   products: getBasketProductsWithCount(state),
   totalPrice: getTotalBasketPrice(state),
+  user: getActiveUser(state),
   totalBasketCount: getTotalBasketCount(state)
   }
 }
 
 const mapDispatchToProps = {
   deleteProduct,
-  cleanBasket, 
-  basketCheckout
+  cleanBasket
 }
 
 export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(Basket)
