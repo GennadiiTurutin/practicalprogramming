@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {createStore, applyMiddleware} from 'redux'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import Layout from './containers/layout'
 import Product from './containers/product'
@@ -16,9 +19,20 @@ import reducers from './reducers'
 
 import './App.css';
 
-const store = createStore(reducers, composeWithDevTools(
-  applyMiddleware(thunk)
- ))
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, reducers)
+const store = createStore(persistedReducer, composeWithDevTools(
+  applyMiddleware(thunk)))
+const persistor = persistStore(store)
+//const store = createStore(reducers, composeWithDevTools(
+  //applyMiddleware(thunk)
+ //))
+
+
 
 class App extends Component {
  
@@ -26,6 +40,7 @@ class App extends Component {
 
     return (
         <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
             <Router>
                   <Layout>
                     <Switch>
@@ -39,6 +54,7 @@ class App extends Component {
         		        </Switch>
   		            </Layout>
             </Router>
+          </PersistGate>
         </Provider>
     )
   }
