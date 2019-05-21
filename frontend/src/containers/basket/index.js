@@ -68,7 +68,7 @@ class Basket extends React.Component {
     const { classes } = this.props;
     const { user } = this.props;
     const isBasketEmpty = R.isEmpty(this.props.products)
-    const basketColor = (user.authenticated === false) ? "disabled" :"default"
+    const basketColor = (user.authenticated === false) ? "disabled" :"primary"
 
     return ( 
         <React.Fragment>

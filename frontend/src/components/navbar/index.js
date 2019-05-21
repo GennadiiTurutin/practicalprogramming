@@ -5,7 +5,7 @@ import { getTotalBasketCount } from '../../selectors';
 import { Link } from 'react-router-dom';
 import LoginDialog from '../../components/dialog_login';
 import RegisterDialog from '../../components/dialog_register';
-import Basket from '../../containers/basket'
+import Profile from '../../containers/profile';
 
 import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
@@ -16,7 +16,7 @@ import { compose } from 'redux'
 import { withStyles } from '@material-ui/core/styles';
 import {  
   getActiveUser
-} from '../../selectors'
+} from '../../selectors';
 
 const styles = theme => ({
   root: {
@@ -39,17 +39,10 @@ class Navigation extends Component {
 
   render () {
       const { classes } = this.props;
-      const SelectCategory = props => <Link to='/profile' {...props} /> 
-       
-
       const authLinks = (
-        <Nav className="ml-auto my-2">
+        <Nav className="ml-auto">
         <div className="containter">
-          <Button aria-label="Profile" 
-                  component={SelectCategory}
-                  className="text-grey" color="primary" >
-            <h5>{this.props.user.username}</h5>
-          </Button>
+          <Profile />
           <Button aria-label="Logout" 
                   className="text-grey" color="primary"
                   onClick={() => { this.onLogout() }} >

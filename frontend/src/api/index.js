@@ -99,3 +99,20 @@ export const checkout = async ( profile ) => {
     resolve(response)
   })
 };
+
+
+export const changeCredentials = async ( id, username, email, password, token ) => {
+  return new Promise(resolve => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Token " + token,
+      }
+    };
+    console.log(config)
+    const body = JSON.stringify({ id, username, email, password });
+    const response = axios.patch(`http://127.0.0.1:8000/profiles/${id}/`, body, config)
+    resolve(response)
+    console.log(response)
+  })
+};

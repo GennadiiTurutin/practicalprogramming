@@ -39,6 +39,10 @@ import {
   CHECKOUT_SUCCESS,
   CHECKOUT_FAILURE,
 
+  CHANGE_CREDENTIALS_START,
+  CHANGE_CREDENTIALS_SUCCESS,
+  CHANGE_CREDENTIALS_FAILURE,
+
   ADD_PRODUCT_TO_BASKET,
   DELETE_PRODUCT,
   CLEAN_BASKET,
@@ -54,7 +58,8 @@ import {
   login as loginUserApi,
   register as registerUserApi,
   like as likeApi,
-  checkout as checkoutApi
+  checkout as checkoutApi,
+  changeCredentials as changeCredentialsApi
 } from '../api'
 
 import axios from "axios";
@@ -283,5 +288,25 @@ export const checkout = ( purchase ) => async dispatch => {
       error: true
     })
     toast.error("Purchase error");
+  }
+}
+
+
+export const changeCredentials = ( id, username, email, password, token ) => async dispatch => {
+  dispatch({type: CHANGE_CREDENTIALS_START})
+  try {
+    const user = await changeCredentialsApi(id, username, email, password, token)
+    dispatch({
+      type: CHANGE_CREDENTIALS_SUCCESS,
+      payload: user.data
+    })
+    toast.success("You've successfully changed your credentials");
+  } catch (err) {
+    dispatch({
+      type: CHANGE_CREDENTIALS_FAILURE,
+      payload: err,
+      error: true
+    })
+    toast.error("Credentials error");
   }
 }
