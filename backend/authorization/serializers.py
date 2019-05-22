@@ -10,6 +10,11 @@ class UserSerializer(serializers.ModelSerializer):
     model = User
     fields = ('id', 'username', 'email', 'user')
 
+class ChangePasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(required=True)
+    username = serializers.CharField(required=True)
+    email = serializers.CharField(required=True)
+
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
   class Meta:

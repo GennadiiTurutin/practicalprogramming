@@ -4,8 +4,9 @@ from django.shortcuts import render
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, ChangePasswordSerializer
 from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated 
 #from profiles.models import Profile
 
 # Register API
@@ -36,7 +37,6 @@ class LoginAPI(generics.GenericAPIView):
     serializer = self.get_serializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     user = serializer.validated_data
-    #profile = Profile.objects.get(id=1)
 
     return Response({
       "id": UserSerializer(user, context=self.get_serializer_context()).data["id"],
@@ -57,3 +57,32 @@ class UserAPI(generics.RetrieveAPIView):
 
   def get_object(self):
     return self.request.user
+
+class ChangePasswordView(generics.UpdateAPIView):
+    serializer_class = ChangePasswordSerializer
+    model = User
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            self.object.set_password(serializer.data.get("password"))
+            self.object.username = serializer.data.get("username")
+            self.object.email = serializer.data.get("email")
+            self.object.save()
+
+            return Response({
+              "id": UserSerializer(self.object, context=self.get_serializer_context()).data["id"],
+              "username": UserSerializer(self.object, context=self.get_serializer_context()).data["username"],
+              "email": UserSerializer(self.object, context=self.get_serializer_context()).data["email"],
+              "user": UserSerializer(self.object, context=self.get_serializer_context()).data["user"],
+              "products": self.object.user.products.values('id'),
+              "authenticated": True,
+              "token": AuthToken.objects.create(self.object)[1]
+            })

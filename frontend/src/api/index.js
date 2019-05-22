@@ -109,10 +109,8 @@ export const changeCredentials = async ( id, username, email, password, token ) 
         "Authorization": "Token " + token,
       }
     };
-    console.log(config)
     const body = JSON.stringify({ id, username, email, password });
-    const response = axios.patch(`http://127.0.0.1:8000/profiles/${id}/`, body, config)
+    const response = axios.patch(`http://127.0.0.1:8000/auth/users/`, body, config)
     resolve(response)
-    console.log(response)
   })
 };
