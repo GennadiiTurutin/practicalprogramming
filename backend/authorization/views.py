@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, ChangePasswordSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, ChangeCredentialsSerializer
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticated 
 #from profiles.models import Profile
@@ -58,8 +58,8 @@ class UserAPI(generics.RetrieveAPIView):
   def get_object(self):
     return self.request.user
 
-class ChangePasswordView(generics.UpdateAPIView):
-    serializer_class = ChangePasswordSerializer
+class ChangeCredentialsView(generics.UpdateAPIView):
+    serializer_class = ChangeCredentialsSerializer
     model = User
     permission_classes = (IsAuthenticated,)
 

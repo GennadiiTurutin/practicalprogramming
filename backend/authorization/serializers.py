@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     model = User
     fields = ('id', 'username', 'email', 'user')
 
-class ChangePasswordSerializer(serializers.Serializer):
+class ChangeCredentialsSerializer(serializers.Serializer):
     password = serializers.CharField(required=True)
     username = serializers.CharField(required=True)
     email = serializers.CharField(required=True)

@@ -6,7 +6,7 @@ from products.views import ProductViewSet
 from orders.views import OrderViewSet
 from profiles.views import ProfileViewSet
 from categories.views import CategoryViewSet
-from authorization.views import RegisterAPI, LoginAPI, UserAPI, ChangePasswordView
+from authorization.views import RegisterAPI, LoginAPI, UserAPI, ChangeCredentialsView
 from knox import views as knox_views
 
 router = routers.DefaultRouter()
@@ -20,7 +20,7 @@ urlpatterns = [
     path('auth/register/', RegisterAPI.as_view()),
     path('auth/login', LoginAPI.as_view()),
     path('auth/user', UserAPI.as_view()),
-    path('auth/users/', ChangePasswordView.as_view()),
+    path('auth/users/', ChangeCredentialsView.as_view()),
     path('auth', include('knox.urls')),
     path('auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('admin/', admin.site.urls),

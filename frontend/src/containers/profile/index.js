@@ -10,7 +10,6 @@ import red from '@material-ui/core/colors/red';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { changeCredentials } from "../../actions";
 import {  
   getActiveUser
@@ -88,7 +87,6 @@ class Profile extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.props)
     return (
       <React.Fragment>
         <Button aria-label="Login" color="primary" onClick={this.handleClickOpen} className={classes.button}>
@@ -165,11 +163,6 @@ class Profile extends React.Component {
               className={classes.iconHover} 
               onClick={this.handleClose} 
               aria-label="Close"
-            />
-            <DeleteIcon 
-              className={classes.iconHover} 
-              onClick={this.handleClose} 
-              aria-label="Delete"
             />
           </ValidatorForm>
           </div>

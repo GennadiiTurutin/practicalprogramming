@@ -17,6 +17,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Checkout from '../checkout';
+import { toast } from "react-toastify";
 
 import {
   getTotalBasketCount,
@@ -53,7 +54,12 @@ class Basket extends React.Component {
   };
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    if (R.isEmpty(this.props.products)) { 
+      toast.error("Your shopping cart is empty!");
+    } else {
+      this.setState({ open: true });
+    }
+    
   };
 
   handleClose = () => {
