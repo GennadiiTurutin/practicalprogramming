@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import * as R from 'ramda';
+import { toast } from "react-toastify";
 
 import {
   fetchProducts,
@@ -38,14 +39,19 @@ class Classroom extends Component {
 
   render () {
     const {purchases} = this.props;
-    const isEmpty = R.isEmpty(purchases)
+    const isEmpty = R.isEmpty(purchases);
+
+    if (this.props.user.authenticated === false) {
+       this.props.history.replace('/')
+       toast.info("Please get authorized");
+    }
     return (
       <div className='col-sm-12 col-lg-12 col-md-12 my-5'>
         <div className="row">
           <div className="col-lg-8">
             {isEmpty && 
               <div className="text-center text-grey">
-                <h2>You don't have any purchases</h2>
+                <h2>Your classroom is empty. You need to buy learning material</h2>
               </div>
             }
             {purchases.map((product, index) => this.renderProduct(product, index))}

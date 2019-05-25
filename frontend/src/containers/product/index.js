@@ -5,7 +5,8 @@ import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import CheckIcon from '@material-ui/icons/Check';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-
+import { toast } from "react-toastify";
+import { Redirect } from 'react-router-dom';
 import {
   fetchProductBySlug, 
   addProductToBasket,
@@ -81,17 +82,26 @@ class Product extends Component {
 
   render () {
     const {product} = this.props
+    const noProduct = (product === undefined ) ? true : false
+    if (noProduct) {toast.info("Product doesn't exist!");}
+
+    const Product = (
+          <div className="col-sm-12 col-lg-12 col-md-12 my-5">
+              <div className="row">
+                <div className="col-lg-4">
+                  <Sidebar />
+                </div>
+                <div className="col-lg-8">
+                  {product && this.renderProduct()}
+                </div>
+              </div>
+          </div>
+    )
+
     return (
-        <div className="col-sm-12 col-lg-12 col-md-12 my-5">
-            <div className="row">
-              <div className="col-lg-4">
-                <Sidebar />
-              </div>
-              <div className="col-lg-8">
-                {product && this.renderProduct()}
-              </div>
-            </div>
-        </div>
+      <React.Fragment>
+        {this.props.product === undefined ? <Redirect to='/' /> : Product}
+      </React.Fragment>
     )
   }
 }

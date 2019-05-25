@@ -11,25 +11,31 @@ import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import CloseIcon from '@material-ui/icons/Close';
 import DoneIcon from '@material-ui/icons/Done';
 import { changeCredentials } from "../../actions";
-import {  
-  getActiveUser
-} from '../../selectors';
+import {  getActiveUser } from '../../selectors';
 
 
 const styles = theme => ({
   form: {
-    display: 'flex',
+    isplay: 'flex',
     flexDirection: 'column',
     margin: 'auto',
-    width: 'fit-content',
+    width: 200,
   },
   button: {
     margin: theme.spacing.unit,
     color: '#B1B7BD',
   },
+  button2: {
+    padding: 0, 
+    border: 'none', 
+    background: 'none'
+  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexDirection: 'column',
+    margin: 'auto',
+    width: 300,
   },
   dense: {
     marginTop: 16,
@@ -40,13 +46,16 @@ const styles = theme => ({
       color: red[800],
     },
   },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
 });
 
 
 class Profile extends React.Component {
   state = {
     open: false,
-    fullWidth: true,
     maxWidth: 'sm',
     id: this.props.user.id,
     username: this.props.user.username,
@@ -58,6 +67,10 @@ class Profile extends React.Component {
   static propTypes = {
   	changeCredentials: PropTypes.func.isRequired,
     authenticated: PropTypes.bool
+  };
+  
+  onLogout = () => {
+    this.props.logout()
   };
 
   handleClickOpen = () => {
@@ -94,7 +107,6 @@ class Profile extends React.Component {
         </Button>
         
         <Dialog
-          fullWidth={this.state.fullWidth}
           maxWidth={this.state.maxWidth}
           open={this.state.open}
           onClose={this.handleClose}
@@ -108,7 +120,7 @@ class Profile extends React.Component {
                   <TextValidator
                     id="username"
                     label="Username"
-                    style={{ margin: 8 }}
+                    className={classes.textField}
                     placeholder="Preferred username"
                     margin="normal"
                     value={this.state.username || ''}
@@ -123,8 +135,7 @@ class Profile extends React.Component {
                   <TextValidator
                     id="email"
                     label="Email"
-                    style={{ margin: 8 }}
-                    fullWidth
+                    className={classes.textField}
                     margin="normal"
                     value={this.state.email || ''}
                     onChange={this.handleEmailChange}
@@ -138,8 +149,7 @@ class Profile extends React.Component {
                   <TextValidator
                     id="password"
                     label="Password"
-                    style={{ margin: 8 }}
-                    fullWidth
+                    className={classes.textField}
                     margin="normal"
                     variant="outlined"
                     type="password"
@@ -153,17 +163,20 @@ class Profile extends React.Component {
                       shrink: true,
                     }}
                   />
-            <button style={{ padding: 0, border: 'none', background: 'none'}}>
-              <DoneIcon 
+            <div className="containet text-center">
+              <button className={classes.button2} >
+                <DoneIcon 
+                  className={classes.iconHover} 
+                  aria-label="Done"
+                />
+              </button>
+
+              <CloseIcon 
                 className={classes.iconHover} 
-                aria-label="Done"
+                onClick={this.handleClose} 
+                aria-label="Close"
               />
-            </button>
-            <CloseIcon 
-              className={classes.iconHover} 
-              onClick={this.handleClose} 
-              aria-label="Close"
-            />
+            </div>
           </ValidatorForm>
           </div>
         </Dialog>

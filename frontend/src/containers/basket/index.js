@@ -32,6 +32,7 @@ import {
 } from '../../actions'
 
 
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -74,18 +75,16 @@ class Basket extends React.Component {
     const { classes } = this.props;
     const { user } = this.props;
     const isBasketEmpty = R.isEmpty(this.props.products)
-    const basketColor = (user.authenticated === false) ? "disabled" :"primary"
-
+    const basketColor = (user.authenticated === false) ? "disabled" : "action"
+    
     return ( 
         <React.Fragment>
-          <div className="text-center">
           <IconButton aria-label="Cart" color="primary" className="text-grey" disabled={!user.authenticated} onClick={this.handleClickOpen}>
             <Badge badgeContent={this.props.totalBasketCount} color="secondary" classes={{ badge: classes.badge }}>
               <ShoppingCartIcon color={basketColor} />
             </Badge>
           </IconButton>
-          </div>
-
+          
           <Dialog
             fullWidth={this.state.fullWidth}
             maxWidth={this.state.maxWidth}

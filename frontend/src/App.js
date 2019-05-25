@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import {createStore, applyMiddleware} from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
@@ -7,13 +8,12 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import { toast } from "react-toastify";
 
 import Layout from './containers/layout'
 import Product from './containers/product'
 import Products from './containers/products'
-import Basket from './containers/basket'
 import Classroom from './containers/classroom'
-import Profile from './containers/profile'
 import Material from './containers/material'
 import reducers from './reducers'
 
@@ -43,13 +43,12 @@ class App extends Component {
             <Router>
                   <Layout>
                     <Switch>
-                      <Route path='/' exact component={Products} />
-                      <Route path='/categories/:id' component={Products} />
-                      <Route path='/products/:slug' component={Product} />
-        		          <Route path='/basket' component={Basket} />
-                      <Route path='/profile' component={Profile} />
-                      <Route path='/classroom' component={Classroom} />
-                      <Route path='/material/:slug' component={Material} />
+                      <Route exact path='/' component={Products} />
+                      <Route exact path='/categories/:id' component={Products} />
+                      <Route exact path='/products/:slug' component={Product} />
+                      <Route exact path='/classroom' component={Classroom} />
+                      <Route exact path='/material/:slug' component={Material} />
+                      <Route path="*" render={() => {toast.info("Path doesn't exist!"); return( <Redirect to='/' /> )} } /> 
         		        </Switch>
   		            </Layout>
             </Router>

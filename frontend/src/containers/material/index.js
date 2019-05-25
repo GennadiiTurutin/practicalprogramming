@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import { toast } from "react-toastify";
 
 import {
   fetchProductBySlug
@@ -28,6 +29,10 @@ class Material extends Component {
 
   render () {
     const {product} = this.props
+    if (this.props.user.authenticated === false) {
+       this.props.history.replace('/')
+       toast.info("Please get authorized");
+    }
     return (
         <div className="col-sm-12 col-lg-12 col-md-12 my-5">
                 {product && this.renderProduct()}

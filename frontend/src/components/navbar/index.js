@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import LoginDialog from '../../components/dialog_login';
 import RegisterDialog from '../../components/dialog_register';
 import Profile from '../../containers/profile';
+import Basket from '../../containers/basket'
 
 import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
@@ -64,23 +65,24 @@ class Navigation extends Component {
       const authClassroom = (
           <Chip
             icon={<FaceIcon />}
-            label="My classroom"
+            label="My Classroom"
             clickable
             className={classes.chip}
-            color="primary"
+            color="action"
           />
         )
 
       const guestClassroom = (
           <Chip
               icon={<FaceIcon />}
-              label="My classroom"
-              clickable={false}
+              label="Not authorized"
+              clickable={true}
               className={classes.chip}
               color="secondary"
           />
         )
-      const link = (this.props.user.authenticated === true) ? `/classroom` : `/`;
+      //const link = (this.props.user.authenticated === true) ? `/classroom` : `/`;
+      const link = '/classroom'
 
       return (
         <React.Fragment>
@@ -98,7 +100,9 @@ class Navigation extends Component {
                     style={{ textDecoration: 'none', color: "white"}}>
                 {this.props.user.authenticated ? authClassroom : guestClassroom}
               </Link>
+              
             </Nav>
+            <Basket />
           </Navbar>
         </React.Fragment>
       )

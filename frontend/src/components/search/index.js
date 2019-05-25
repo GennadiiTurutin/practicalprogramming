@@ -63,7 +63,7 @@ class Search extends Component {
 
 	handleChange (event) {
 		this.setState({ value: event.target.value })
-    this.props.searchProduct(this.state.value)
+    this.props.searchProduct(this.state.value);    
 	}
 
 	render() {

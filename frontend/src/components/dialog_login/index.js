@@ -18,15 +18,23 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     margin: 'auto',
-    width: 'fit-content',
+    width: 200,
   },
   button: {
     margin: theme.spacing.unit,
     color: '#B1B7BD',
   },
+  button2: {
+    padding: 0, 
+    border: 'none', 
+    background: 'none'
+  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexDirection: 'column',
+    margin: 'auto',
+    width: 300,
   },
   dense: {
     marginTop: 16,
@@ -37,13 +45,17 @@ const styles = theme => ({
       color: red[800],
     },
   },
+  textField: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+  },
 });
 
 
 class LoginDialog extends React.Component {
   state = {
     open: false,
-    fullWidth: true,
+    fullWidth: false,
     maxWidth: 'sm',
     email: "",
     password: "",
@@ -100,10 +112,11 @@ class LoginDialog extends React.Component {
                     ref="form"
                     onSubmit={this.onSubmit}
                     autoComplete="off">
+                  
                   <TextValidator
                     id="username"
                     label="Username"
-                    style={{ margin: 8 }}
+                    className={classes.textField}
                     placeholder="Preferred username"
                     margin="normal"
                     value={this.state.username || ''}
@@ -115,11 +128,11 @@ class LoginDialog extends React.Component {
                       shrink: true,
                     }}
                   />
+                  
                   <TextValidator
                     id="password"
                     label="Password"
-                    style={{ margin: 8 }}
-                    fullWidth
+                    className={classes.textField}
                     margin="normal"
                     variant="outlined"
                     type="password"
@@ -128,12 +141,12 @@ class LoginDialog extends React.Component {
                     value={this.state.password || '' }
                     onChange={this.handlePasswordChange}
                     autoComplete="current-password"
-                    helperText="Your password might include anything"
                     InputLabelProps={{
                       shrink: true,
                     }}
                   />
-            <button style={{ padding: 0, border: 'none', background: 'none'}}>
+            <div className="container text-center">
+            <button className={classes.button2}>
               <DoneIcon 
                 className={classes.iconHover} 
                 aria-label="Done"
@@ -144,6 +157,7 @@ class LoginDialog extends React.Component {
               onClick={this.handleClose} 
               aria-label="Close"
             />
+            </div>
           </ValidatorForm>
           </div>
         </Dialog>

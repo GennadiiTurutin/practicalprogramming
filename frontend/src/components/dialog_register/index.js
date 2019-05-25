@@ -18,15 +18,23 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     margin: 'auto',
-    width: 'fit-content',
+    width: 200,
   },
   button: {
     margin: theme.spacing.unit,
     color: '#B1B7BD',
   },
+  button2: {
+    padding: 0, 
+    border: 'none', 
+    background: 'none'
+  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexDirection: 'column',
+    margin: 'auto',
+    width: 300,
   },
   dense: {
     marginTop: 16,
@@ -37,12 +45,16 @@ const styles = theme => ({
       color: red[800],
     },
   },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
 });
 
 class RegisterDialog extends React.Component {
   state = {
     open: false,
-    fullWidth: true,
+    fullWidth: false,
     maxWidth: 'sm',
     username: "",
     email: "",
@@ -125,7 +137,7 @@ class RegisterDialog extends React.Component {
                     <TextValidator
                       id="username"
                       label="Username"
-                      style={{ margin: 8 }}
+                      className={classes.textField}
                       placeholder="Preferred username"
                       margin="normal"
                       value={this.state.username}
@@ -140,8 +152,7 @@ class RegisterDialog extends React.Component {
                     <TextValidator
                       id="email"
                       label="Email"
-                      style={{ margin: 8 }}
-                      fullWidth
+                      className={classes.textField}
                       margin="normal"
                       value={this.state.email}
                       onChange={this.handleEmailChange}
@@ -155,8 +166,7 @@ class RegisterDialog extends React.Component {
                     <TextValidator
                       id="password"
                       label="Password"
-                      style={{ margin: 8 }}
-                      fullWidth
+                      className={classes.textField}
                       margin="normal"
                       variant="outlined"
                       type="password"
@@ -173,9 +183,8 @@ class RegisterDialog extends React.Component {
                     <TextValidator
                       id="confirmation"
                       label="Confirmation"
-                      style={{ margin: 8 }}
+                      className={classes.textField}
                       placeholder="Confirm your password"
-                      fullWidth
                       margin="normal"
                       variant="outlined"
                       value={this.state.repeatPassword}
@@ -188,7 +197,8 @@ class RegisterDialog extends React.Component {
                         shrink: true,
                       }}
                     />
-              <button style={{ padding: 0, border: 'none', background: 'none'}}>
+              <div className="containet text-center">
+              <button className={classes.button2}>
                   <DoneIcon 
                     className={classes.iconHover} 
                     aria-label="Done"
@@ -199,6 +209,7 @@ class RegisterDialog extends React.Component {
                 onClick={this.handleClose} 
                 aria-label="Close"
               />
+              </div>
           </ValidatorForm>
           </div>
         </Dialog>
