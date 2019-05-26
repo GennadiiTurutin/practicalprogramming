@@ -75,11 +75,11 @@ class Basket extends React.Component {
     const { classes } = this.props;
     const { user } = this.props;
     const isBasketEmpty = R.isEmpty(this.props.products)
-    const basketColor = (user.authenticated === false) ? "disabled" : "action"
+    const basketColor = (user.authenticated === false) ? "disabled" : "inherit"
     
     return ( 
         <React.Fragment>
-          <IconButton aria-label="Cart" color="primary" className="text-grey" disabled={!user.authenticated} onClick={this.handleClickOpen}>
+          <IconButton aria-label="Cart" color="primary" className='text-grey' disabled={!user.authenticated} onClick={this.handleClickOpen}>
             <Badge badgeContent={this.props.totalBasketCount} color="secondary" classes={{ badge: classes.badge }}>
               <ShoppingCartIcon color={basketColor} />
             </Badge>

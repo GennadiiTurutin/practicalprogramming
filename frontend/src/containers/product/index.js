@@ -7,6 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { toast } from "react-toastify";
 import { Redirect } from 'react-router-dom';
+import Disqus from 'disqus-react';
 import {
   fetchProductBySlug, 
   addProductToBasket,
@@ -55,6 +56,12 @@ class Product extends Component {
     const { product } = this.props
     const { user } = this.props;
     const productBought = this.handleProducts(product);
+    const disqusShortname = 'example';
+    const disqusConfig = {
+      url: 'http://localhost:3000/products/',
+      identifier: this.props.product.id,
+      title: this.props.product.title,
+    };
     return (
       <div className="container my-4 text-grey"> 
         <div className='form-group'>
@@ -74,6 +81,15 @@ class Product extends Component {
             }
           />
 
+        </div>
+
+        <div className="article">
+            <h1>{this.props.product.title}</h1>
+            <Disqus.CommentCount shortname={disqusShortname} config={disqusConfig}>
+                Comments
+            </Disqus.CommentCount>
+            <p>{this.props.product.description}</p>
+            <Disqus.DiscussionEmbed shortname={disqusShortname} config={disqusConfig} />
         </div>
 
       </div>

@@ -68,7 +68,7 @@ class Navigation extends Component {
             label="My Classroom"
             clickable
             className={classes.chip}
-            color="action"
+            color="default"
           />
         )
 
@@ -99,8 +99,7 @@ class Navigation extends Component {
               <Link to={link}
                     style={{ textDecoration: 'none', color: "white"}}>
                 {this.props.user.authenticated ? authClassroom : guestClassroom}
-              </Link>
-              
+              </Link> 
             </Nav>
             <Basket />
           </Navbar>
