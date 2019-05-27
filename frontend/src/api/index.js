@@ -90,15 +90,27 @@ export const checkout = async ( profile ) => {
         "Content-Type": "application/json"
       }
     };
-    const id = 2
+    const id = profile.id
     const user = profile.id 
     const products = profile.products.map(x => x.id);
     const body = JSON.stringify({id, user, products});
-    console.log(body)
     const response = axios.put(`http://127.0.0.1:8000/profiles/${id}/`, body, config)
     resolve(response)
   })
 };
+
+export const payment = async ( token, amount ) => {
+  return new Promise(resolve => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    const body = JSON.stringify({token, amount});
+    const response = axios.post("http://127.0.0.1:8000/payment/", body, config)
+    resolve(response)
+  })
+}
 
 
 export const changeCredentials = async ( id, username, email, password, token ) => {

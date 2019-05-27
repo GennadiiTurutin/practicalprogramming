@@ -39,6 +39,10 @@ import {
   CHECKOUT_SUCCESS,
   CHECKOUT_FAILURE,
 
+  PAYMENT_START,
+  PAYMENT_SUCCESS,
+  PAYMENT_FAILURE,
+
   CHANGE_CREDENTIALS_START,
   CHANGE_CREDENTIALS_SUCCESS,
   CHANGE_CREDENTIALS_FAILURE,
@@ -59,6 +63,7 @@ import {
   register as registerUserApi,
   like as likeApi,
   checkout as checkoutApi,
+  payment as paymentApi,
   changeCredentials as changeCredentialsApi
 } from '../api'
 
@@ -288,6 +293,24 @@ export const checkout = ( purchase ) => async dispatch => {
       error: true
     })
     toast.error("Purchase error");
+  }
+}
+
+export const payment = ( token, amount ) => async dispatch => {
+  dispatch({type: PAYMENT_START})
+  try {
+    await paymentApi(token, amount)
+    dispatch({
+      type: PAYMENT_SUCCESS
+    })
+    toast.success("Your card has been charged");
+  } catch (err) {
+    dispatch({
+      type: PAYMENT_FAILURE,
+      payload: err,
+      error: true
+    })
+    toast.error("Payment error");
   }
 }
 

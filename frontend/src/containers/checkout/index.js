@@ -1,6 +1,6 @@
 import React from 'react'
 import StripeCheckout from 'react-stripe-checkout';
-import { checkout } from "../../actions";
+import { checkout, payment } from "../../actions";
 import {connect} from 'react-redux';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,8 +9,11 @@ import red from '@material-ui/core/colors/red';
 
 import { 
   getActiveUser,
-  getBasketProductsWithCount
+  getBasketProductsWithCount,
+  getTotalBasketPrice
 } from '../../selectors'
+
+const stripeKey = `${process.env.REACT_APP_stripeKey}`
 
 const styles = theme => ({
   root: {
@@ -31,6 +34,7 @@ class Checkout extends React.Component {
       const { user } = this.props;
       const { products } = this.props;
       products.map((product) => user.products.push({"id": product.id}))
+      this.props.payment( token.id, this.props.totalPrice)
       this.props.checkout(user);
     };
 
@@ -43,7 +47,7 @@ class Checkout extends React.Component {
         description="Payment"
         locale="auto"
         name="Praktikum.com"
-        stripeKey="pk_test_P4GDhrq8BnHwHHSFnxh29ZzG00Q7N0ZQ9J"
+        stripeKey={stripeKey}
         token={this.onToken}
         zipCode
         className={classes.iconHover} 
@@ -57,13 +61,15 @@ Checkout.propTypes = {
 };
 
 const mapDispatchToProps = {
-  checkout
+  checkout,
+  payment
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
     user: getActiveUser(state),
-    products: getBasketProductsWithCount(state)
+    products: getBasketProductsWithCount(state),
+    totalPrice: getTotalBasketPrice(state)
   }
 }
 

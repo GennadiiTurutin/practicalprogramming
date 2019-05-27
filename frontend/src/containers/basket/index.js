@@ -55,12 +55,11 @@ class Basket extends React.Component {
   };
 
   handleClickOpen = () => {
-    if (R.isEmpty(this.props.products)) { 
+    if (R .isEmpty(this.props.products)) { 
       toast.error("Your shopping cart is empty!");
     } else {
       this.setState({ open: true });
     }
-    
   };
 
   handleClose = () => {
