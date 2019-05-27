@@ -48,15 +48,19 @@ const styles = theme => ({
 });
 
 class Basket extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handleClose = this.handleClose.bind(this)
+  }
   state = {
     open: false,
     fullWidth: true,
     maxWidth: 'sm'
   };
-
+  
   handleClickOpen = () => {
-    if (R .isEmpty(this.props.products)) { 
-      toast.error("Your shopping cart is empty!");
+    if (R.isEmpty(this.props.products)) { 
+      toast.info("Your shopping cart is empty!");
     } else {
       this.setState({ open: true });
     }
@@ -148,7 +152,7 @@ class Basket extends React.Component {
             <DialogActions>
             {!isBasketEmpty &&
               <div>
-              <Checkout /> 
+              <Checkout handleClose = {this.handleClose} /> 
               <DeleteIcon 
                 className={classes.iconHover} 
                 onClick={this.handleDelete} 

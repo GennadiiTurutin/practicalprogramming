@@ -30,15 +30,19 @@ const styles = theme => ({
 });
 
 class Checkout extends React.Component {
+
   onToken = (token, addresses) => {
       const { user } = this.props;
       const { products } = this.props;
       products.map((product) => user.products.push({"id": product.id}))
+      this.props.handleClose()
       this.props.payment( token.id, this.props.totalPrice)
       this.props.checkout(user);
     };
 
   render() {
+
+
     const { classes } = this.props;
 
     return (
