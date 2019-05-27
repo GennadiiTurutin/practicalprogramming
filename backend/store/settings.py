@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from keys import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^b0268w*2$2dsz@0a+gvs$)&ylu*n_had=7i_=40$ib!v=va$r'
+SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -46,9 +47,9 @@ INSTALLED_APPS = [
     'authorization',
     'profiles',
     'products',
+    'payments',
     'categories',
     'stripe',
-    'payments',
 
 
     'allauth',
@@ -158,13 +159,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 SITE_ID = 1
-
-
-if DEBUG:
-    #test keys
-    STRIPE_PUBLISHABLE_KEY = ''
-    STRIPE_SECRET_KEY = ''
-else:
-    #live keys
-    STRIPE_PUBLISHABLE_KEY = "YOUR STRIPE LIVE PUB KEY"
-    STRIPE_SECRET_KEY = "YOUR STRIPE LIVE SECRET KEY"
