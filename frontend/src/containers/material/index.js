@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { toast } from "react-toastify";
 import { Redirect } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 
 import {
   fetchProductBySlug
@@ -22,7 +23,7 @@ class Material extends Component {
         <div className='form-group'>
           <h1>{product.title}</h1>
           <p>{product.description}</p>
-          <p>{product.content}</p>
+          <ReactMarkdown source={product.content} escapeHtml={false}/>
         </div>
       </div>
     )
