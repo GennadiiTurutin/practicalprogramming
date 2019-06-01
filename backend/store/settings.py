@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+#ALLOWED_HOSTS = ['8wo1pnlbod.execute-api.us-east-1.amazonaws.com']
+
 CORS_ORIGIN_WHITELIST = ('localhost:3000')
 
 # Application definition

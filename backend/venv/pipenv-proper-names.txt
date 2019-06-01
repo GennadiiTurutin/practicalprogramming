@@ -1,0 +1,7 @@
+cfn_flip
+Django
+lambda_packages
+Markdown
+PyYAML
+Unidecode
+Werkzeug
