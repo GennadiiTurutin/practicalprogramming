@@ -4,7 +4,6 @@ from rest_framework import routers
 from django.views.generic import TemplateView
 
 from products.views import ProductViewSet
-from orders.views import OrderViewSet
 from profiles.views import ProfileViewSet
 from categories.views import CategoryViewSet
 from payments.views import PaymentViewSet
@@ -18,7 +17,6 @@ from django.conf import settings
 router = routers.DefaultRouter()
 router.register('products', ProductViewSet)
 router.register('profiles', ProfileViewSet)
-router.register('orders', OrderViewSet)
 router.register('categories', CategoryViewSet)
 router.register('payments', PaymentViewSet)
 

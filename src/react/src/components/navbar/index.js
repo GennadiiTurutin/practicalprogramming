@@ -89,7 +89,7 @@ class Navigation extends Component {
           <Navbar expand="lg">
             <Navbar.Brand className="text-grey">
               <Link to='/' style={{ textDecoration: 'none', color: "#B1B7BD" }}>
-              <h1>Praktik.us</h1>
+              <h1>reactshop.io</h1>
               </Link>
             </Navbar.Brand>
             {this.props.user.authenticated ? authLinks : guestLinks}

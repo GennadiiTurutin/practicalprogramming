@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const fetchProducts = async () => {
 	return new Promise(resolve => {
-		const response = axios.get("http://127.0.0.1:8000/api/products/")
+		const response = axios.get("https://reactshop.io/api/products/")
 		resolve(response)
 	})
 };
@@ -31,7 +31,7 @@ export const fetchProductBySlug = async (slug, products)  => {
 
 export const fetchCategories = async () => {
 	return new Promise(resolve => {
-		const response = axios.get("http://127.0.0.1:8000/api/categories/")
+		const response = axios.get("https://reactshop.io/api/categories/")
 		resolve(response)
 	})
 };
@@ -39,7 +39,7 @@ export const fetchCategories = async () => {
 
 export const fetchProfileById = async id => {
 	return new Promise(resolve => {
-		const response = axios.get("http://127.0.0.1:8000/api/profiles/", id, '/')
+		const response = axios.get("https://reactshop.io/api/profiles/", id, '/')
 		resolve(response)
 	})
 };
@@ -52,7 +52,7 @@ export const login = async ( username, password ) => {
       }
     };
     const body = JSON.stringify({ username, password });
-    const response = axios.post("http://127.0.0.1:8000/auth/login", body, config)
+    const response = axios.post("https://reactshop.io/auth/login", body, config)
     resolve(response)
   })
 };
@@ -65,7 +65,7 @@ export const register = async ( username, email, password ) => {
       }
     };
     const body = JSON.stringify({ username, email, password });
-    const response = axios.post("http://127.0.0.1:8000/auth/register/", body, config)
+    const response = axios.post("https://reactshop.io/auth/register/", body, config)
     resolve(response)
   })
 };
@@ -78,7 +78,7 @@ export const like = async ( products, index ) => {
         "Content-Type": "application/json"
       }
     };
-    const response = axios.put(`http://127.0.0.1:8000/api/products/${product.id}/`, product, config)
+    const response = axios.put(`https://reactshop.io/api/products/${product.id}/`, product, config)
     resolve(response)
   })
 };
@@ -94,7 +94,7 @@ export const checkout = async ( profile ) => {
     const user = profile.id 
     const products = profile.products.map(x => x.id);
     const body = JSON.stringify({id, user, products});
-    const response = axios.put(`http://127.0.0.1:8000/api/profiles/${id}/`, body, config)
+    const response = axios.put(`https://reactshop.io/api/profiles/${id}/`, body, config)
     resolve(response)
   })
 };
@@ -107,7 +107,7 @@ export const payment = async ( token, amount ) => {
       }
     };
     const body = JSON.stringify({token, amount});
-    const response = axios.post("http://127.0.0.1:8000/payment/", body, config)
+    const response = axios.post("https://reactshop.io/payment/", body, config)
     resolve(response)
   })
 }
@@ -122,7 +122,7 @@ export const changeCredentials = async ( id, username, email, password, token ) 
       }
     };
     const body = JSON.stringify({ id, username, email, password });
-    const response = axios.patch(`http://127.0.0.1:8000/auth/users/`, body, config)
+    const response = axios.patch(`https://reactshop.io/auth/users/`, body, config)
     resolve(response)
   })
 };

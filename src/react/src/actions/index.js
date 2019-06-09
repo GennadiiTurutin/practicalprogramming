@@ -231,7 +231,7 @@ export const logout = () => (dispatch, getState) => {
   dispatch({type: LOGOUT_USER_START})
   dispatch({type: CLEAN_BASKET})
   try {
-    axios.post("http://127.0.0.1:8000/auth/logout", null, tokenConfig(getState))
+    axios.post("https://reactshop.io/auth/logout", null, tokenConfig(getState))
     dispatch({
       type: LOGOUT_USER_SUCCESS,
     })
