@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import { logout } from "../../actions";
 import { compose } from 'redux'
 import { withStyles } from '@material-ui/core/styles';
+import logo from './reactshop_logo.png';
 import {  
   getActiveUser
 } from '../../selectors';
@@ -41,7 +42,6 @@ class Navigation extends Component {
   render () {
       const { classes } = this.props;
       const authLinks = (
-        <Nav className="ml-auto">
         <div className="containter">
           <Profile />
           <Button aria-label="Logout" 
@@ -50,16 +50,13 @@ class Navigation extends Component {
            <h5> Logout</h5>
           </Button>
         </div>
-        </Nav>
       );
 
       const guestLinks = (
-        <Nav className="ml-auto">
           <div className="containter">
           <LoginDialog /> 
           <RegisterDialog /> 
           </div>
-        </Nav>
       );
 
       const authClassroom = (
@@ -86,22 +83,33 @@ class Navigation extends Component {
 
       return (
         <React.Fragment>
-          <Navbar expand="lg">
-            <Navbar.Brand className="text-grey">
-              <Link to='/' style={{ textDecoration: 'none', color: "#B1B7BD" }}>
-              <h1>reactshop.io</h1>
+          <Navbar collapseOnSelect expand="lg" variant="dark">
+            <Navbar.Brand>
+              <Link to='/'>
+                <img
+                  alt=""
+                  src={logo}
+                  width="300"
+                  height="100"
+                  className="d-inline-block align-top"
+                />
               </Link>
             </Navbar.Brand>
-            {this.props.user.authenticated ? authLinks : guestLinks}
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="ml-auto">
+                {this.props.user.authenticated ? authLinks : guestLinks}
+                <Link to={link}
+                      style={{ textDecoration: 'none', color: "white"}}>
+                  {this.props.user.authenticated ? authClassroom : guestClassroom}
+                </Link> 
+              </Nav>   
+            </Navbar.Collapse>
           </Navbar>
           <Navbar expand="sm">
             <Nav className="ml-auto">
-              <Link to={link}
-                    style={{ textDecoration: 'none', color: "white"}}>
-                {this.props.user.authenticated ? authClassroom : guestClassroom}
-              </Link> 
+              <Basket />
             </Nav>
-            <Basket />
           </Navbar>
         </React.Fragment>
       )

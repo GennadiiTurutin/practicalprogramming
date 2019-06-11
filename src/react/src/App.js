@@ -28,7 +28,7 @@ const persistedReducer = persistReducer(persistConfig, reducers)
 const store = createStore(persistedReducer, composeWithDevTools(
   applyMiddleware(thunk)))
 const persistor = persistStore(store)
-persistor.purge()
+//persistor.purge()
 //const store = createStore(reducers, composeWithDevTools(
   //applyMiddleware(thunk)
  //))
