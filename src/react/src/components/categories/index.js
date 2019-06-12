@@ -6,6 +6,7 @@ import {compose} from 'redux'
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import * as R from 'ramda';
+import red from '@material-ui/core/colors/red';
 
 const Categories = ({categories, activeCategoryId}) => {
   
@@ -18,7 +19,9 @@ const Categories = ({categories, activeCategoryId}) => {
       <Button aria-label="Category" color="primary" component={SelectCategory} key={index}>
         <div className="container text-left text-grey">
           <h5>
-            <Checkbox checked={categoryActive} />
+            <Checkbox checked={categoryActive} 
+                style={{ color: red[500],'&$checked': { color: red[500],},}} 
+            />
             {category.title}
           </h5>
         </div>
@@ -32,7 +35,9 @@ const Categories = ({categories, activeCategoryId}) => {
       <Button aria-label="Category" color="primary" component={AllCategories}>
         <div className="container text-left text-grey">
           <h5>
-            <Checkbox checked={ activeCategoryId===undefined }/>
+            <Checkbox checked={ activeCategoryId===undefined } 
+            style={{ color: red[500],'&$checked': { color: red[500],},}}
+            />
             All categories
           </h5>
         </div>

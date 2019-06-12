@@ -11,7 +11,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import red from '@material-ui/core/colors/red';
-import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Badge';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CloseIcon from '@material-ui/icons/Close';
@@ -31,8 +31,6 @@ import {
   cleanBasket 
 } from '../../actions'
 
-
-
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -42,7 +40,7 @@ const styles = theme => ({
   iconHover: {
     margin: theme.spacing.unit * 2,
     '&:hover': {
-      color: red[800],
+      color: red[500],
     },
   },
 });
@@ -82,11 +80,11 @@ class Basket extends React.Component {
     
     return ( 
         <React.Fragment>
-          <IconButton aria-label="Cart" color="primary" className='text-grey' disabled={!user.authenticated} onClick={this.handleClickOpen}>
-            <Badge badgeContent={this.props.totalBasketCount} color="secondary" classes={{ badge: classes.badge }}>
-              <ShoppingCartIcon color={basketColor} />
+          <Button aria-label="Cart" color="primary" className='text-grey' disabled={!user.authenticated} onClick={this.handleClickOpen}>
+            <Badge badgeContent={this.props.totalBasketCount} color="secondary" variant="dot">
+              <ShoppingCartIcon color={basketColor} style={{fontSize: '20px', marginBottom: '30%'}} />
             </Badge>
-          </IconButton>
+          </Button>
           
           <Dialog
             fullWidth={this.state.fullWidth}

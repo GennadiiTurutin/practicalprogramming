@@ -119,8 +119,8 @@ class RegisterDialog extends React.Component {
 
     return (
       <React.Fragment>
-        <Button aria-label="Login" color="primary" onClick={this.handleClickOpen} className={classes.button}>
-          <h5>Register</h5>
+        <Button aria-label="Register" color="primary" onClick={this.handleClickOpen} className={classes.button}>
+          <h6>Register</h6>
         </Button>
         <Dialog
           fullWidth={this.state.fullWidth}

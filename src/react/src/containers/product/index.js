@@ -84,7 +84,7 @@ class Product extends Component {
         shortname='praktikum-1'
         identifier={String(this.props.product.id)}
         title={this.props.product.title}
-        url='http://localhost:3000/products/'
+        url='https://reactshop.io/products/'
         onNewComment={this.handleNewComment}/>
 
       </div>

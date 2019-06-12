@@ -102,8 +102,8 @@ class Profile extends React.Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Button aria-label="Login" color="primary" onClick={this.handleClickOpen} className={classes.button}>
-          <h5>{this.props.user.username}</h5>
+        <Button aria-label="Profile" color="primary" onClick={this.handleClickOpen} className={classes.button}>
+          <h6>{this.props.user.username}</h6>
         </Button>
         
         <Dialog

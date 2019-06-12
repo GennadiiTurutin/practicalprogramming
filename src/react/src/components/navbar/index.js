@@ -15,7 +15,10 @@ import Button from '@material-ui/core/Button';
 import { logout } from "../../actions";
 import { compose } from 'redux'
 import { withStyles } from '@material-ui/core/styles';
-import logo from './reactshop_logo.png';
+import red from '@material-ui/core/colors/red';
+import indigo from '@material-ui/core/colors/indigo';
+import { green } from '@material-ui/core/colors';
+//import logo from '../../assets/reactshop_logo.png';
 import {  
   getActiveUser
 } from '../../selectors';
@@ -26,8 +29,13 @@ const styles = theme => ({
     justifyContent: 'center',
     flexWrap: 'wrap',
   },
+  button: {
+    margin: theme.spacing.unit,
+    color: '#B1B7BD',
+  },
   chip: {
     margin: theme.spacing.unit,
+    marginTop: 0,
   },
 });
 
@@ -41,45 +49,51 @@ class Navigation extends Component {
 
   render () {
       const { classes } = this.props;
+
       const authLinks = (
-        <div className="containter">
+        <div className="container-fluid">
           <Profile />
           <Button aria-label="Logout" 
-                  className="text-grey" color="primary"
+                  color="primary"
+                  className={classes.button}
                   onClick={() => { this.onLogout() }} >
-           <h5> Logout</h5>
+           <h6>Logout</h6>
           </Button>
+          <Link to='/classroom'
+                style={{ textDecoration: 'none', color: "white"}}>
+            <Chip
+              icon={<FaceIcon />}
+              label="My Classroom"
+              clickable
+              className={classes.chip}
+              color="default"
+             
+            />
+          </Link> 
+          <Basket />
         </div>
       );
 
       const guestLinks = (
-          <div className="containter">
-          <LoginDialog /> 
-          <RegisterDialog /> 
+          <div className="container-fluid">
+            <LoginDialog /> 
+            <RegisterDialog /> 
+            <Link to='/classroom'
+                  style={{ textDecoration: 'none', color: "white"}}>
+            <Chip
+                icon={<FaceIcon />}
+                label="Not authorized"
+                clickable={true}
+                className={classes.chip}
+                color="secondary"
+                style={{ backgroundColor: red[500] }}
+            />
+            </Link>
+            <Basket />
           </div>
       );
 
-      const authClassroom = (
-          <Chip
-            icon={<FaceIcon />}
-            label="My Classroom"
-            clickable
-            className={classes.chip}
-            color="default"
-          />
-        )
-
-      const guestClassroom = (
-          <Chip
-              icon={<FaceIcon />}
-              label="Not authorized"
-              clickable={true}
-              className={classes.chip}
-              color="secondary"
-          />
-        )
       //const link = (this.props.user.authenticated === true) ? `/classroom` : `/`;
-      const link = '/classroom'
 
       return (
         <React.Fragment>
@@ -88,7 +102,7 @@ class Navigation extends Component {
               <Link to='/'>
                 <img
                   alt=""
-                  src={logo}
+                  src={'https://s3.amazonaws.com/praktik.us/static/media/reactshop_logo.4169d542.png'}
                   width="300"
                   height="100"
                   className="d-inline-block align-top"
@@ -99,17 +113,8 @@ class Navigation extends Component {
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="ml-auto">
                 {this.props.user.authenticated ? authLinks : guestLinks}
-                <Link to={link}
-                      style={{ textDecoration: 'none', color: "white"}}>
-                  {this.props.user.authenticated ? authClassroom : guestClassroom}
-                </Link> 
               </Nav>   
             </Navbar.Collapse>
-          </Navbar>
-          <Navbar expand="sm">
-            <Nav className="ml-auto">
-              <Basket />
-            </Nav>
           </Navbar>
         </React.Fragment>
       )
